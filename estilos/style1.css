@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+VN:wght@100..400&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
+
+:root{
+    --primary-color: rgb(150, 178, 97);
+    --secondary-color: orange;
+    --terciary-color: rgb(229, 227, 212);
+    --text-color: rgb(202, 135, 10);
+    --link-hover-color: rgb(202, 135, 10);
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+
+}
+
+.main-content{
+    height: 800px;
+}
+.login-card{
+    font-family: 'Roboto', 'sans-serif';
+}
+
+.bg-primary-custom{
+    background-color: var(--primary-color) !important;
+}
+
+.bg-secondary-custom{
+    background-color: var(--secondary-color) !important;
+}
+
+.bg-terciary-custom{
+    background-color: var(--terciary-color) !important;
+}
+
+.bg-btn-custom{
+    background-color: var(--info-color);
+}
+
+.btn-secondary-custom{
+    background-color: var(--secondary-color);
+}
+
+.border-primary{
+    color: var(--secondary-color);
+}
+.text-primary-custom{
+    color: var(--primary-color);
+}
+.text-color-custom{
+    color: var(--text-color);
+}
+.link-hover-custom:hover{
+    background-color: var(--link-hover-color);
+}
+
+.navbar-nav .nav-link {
+    color: var(--text-color);
+
+}
