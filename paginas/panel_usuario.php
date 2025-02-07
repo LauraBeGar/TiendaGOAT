@@ -63,7 +63,7 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
                         <div class="col-md-4 d-flex justify-content-center">
                             <div class="card" style="width: 17rem;">
                                 <?php if (!empty($producto->getImagen())): ?>
-                                    <img src="<?= htmlspecialchars($producto->getImagen()) ?>" class="card-img-top" alt="<?= htmlspecialchars($producto->getNombre()) ?>" style="width: 100%; height: 250px; object-fit: cover;">
+                                    <img src="/img/<?= htmlspecialchars($producto->getImagen()) ?>" class="card-img-top" alt="<?= htmlspecialchars($producto->getNombre()) ?>" style="width: 100%; height: 250px; object-fit: cover;">
                                 <?php else: ?>
                                     <div class="p-3 text-center">No hay imagen disponible</div>
                                 <?php endif; ?>
@@ -71,7 +71,7 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
                                     <h5 class="card-title"><?= htmlspecialchars($producto->getNombre()) ?></h5>
                                     <p class="card-text"><?= htmlspecialchars($producto->getDescripcion()) ?> </p>
                                     <p class="card-text fw-bold"><?= htmlspecialchars($producto->getPrecio()) ?> €</p>
-                                    <a href="carrito.php" class="btn btn-outline-warning text-dark">Añadir al carrito</a>
+                                    <a href="../servidor/c_carrito.php?codigo=<?= $producto->getCodigo()?>&nombre=<?= $producto->getNombre() ?>&imagen=<?= $producto->getCodigo()?>&precio=<?= $producto->getPrecio() ?>&categoria=<?= $producto->getCodigo() ?>" class="btn btn-outline-warning text-dark">Añadir al carrito</a>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
                     <div><a href="pedido_usuario.php" class="text-decoration-none text-color-custom">Mis pedidos</a></div>
                     <div><a href="cambiar_clave.php" class="text-decoration-none text-color-custom">Cambiar contraseña</a></div>
                     <div class="logout mt-3 text-bold">
-                        <a href="logout.php" class="text-decoration-none text-danger font-weight-bold">Cerrar sesión</a>
+                        <a href="/servidor/logout.php" class="text-decoration-none text-danger font-weight-bold">Cerrar sesión</a>
                     </div>
                 </div>
             </div>

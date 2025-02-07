@@ -70,11 +70,11 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
             <!-- Columna de productos -->
             <div class="col-md-10">
                 <div class="row g-4">
-                    <h1>
+                    <h3>
                         <?=
                        $categoriaNombre['nombre'] ;
                          ?>
-                    </h1>
+                    </h3>
                 </div>
 
                 <div class="row g-4">

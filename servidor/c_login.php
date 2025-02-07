@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'config.php';
+
 require_once '../gestores/GestorUsuarios.php';
 
 $db = conectar();
@@ -19,6 +20,7 @@ if ($usuario) {
     $_SESSION['email'] = $usuario['email'];
     $_SESSION['rol'] = $usuario['rol'];
     $_SESSION['nombre'] = $usuario['nombre'];
+    $_SESSION['dni'] = $usuario['dni'];
 
     // Redirige al panel correspondiente según el rol
     if ($usuario['rol'] == 0) {

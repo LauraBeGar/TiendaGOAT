@@ -10,7 +10,7 @@ if (isset($_GET['buscar'])) {
     $productos = $gestor->buscarProducto($_GET['buscar']);
 } 
 
-$numCarrito = count($_SESSION['carrito']);
+$numCarrito = isset($_SESSION['carrito'])?count($_SESSION['carrito']) : 0;
 
 ?>
 <!DOCTYPE html>

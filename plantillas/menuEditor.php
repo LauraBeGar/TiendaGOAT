@@ -36,7 +36,7 @@
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="text-decoration-none text-primary-custom" href="servidor/logout.php">Cerrar Sesión</a>
+                        <a class="text-decoration-none text-primary-custom" href="../servidor/logout.php">Cerrar Sesión</a>
                     </li>
                 </ul>
             </div>

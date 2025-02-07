@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container-fluid mt-4 flex-grow-1"> <!-- Flex-grow para que el contenido se expanda -->
         <div class="row">
             <div class="col-md-2">
-                <?php include 'menu.php'; ?>
+                <?php include '../plantillas/menu.php'; ?>
             </div>
             <div class="col-md-7">
                 <div class="content text-center p-3">

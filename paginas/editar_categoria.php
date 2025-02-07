@@ -7,6 +7,7 @@ include_once '../gestores/Categoria.php';
 $db = conectar();
 $gestor = new GestorCategorias($db);
 $categoria = null;
+$padres = $gestor->getCategoriaPadres();
 
 // Verificar si se reciben los datos esperados en $_GET
 if (isset($_GET['codigo'])) {
@@ -61,13 +62,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-<?php include '../plantillas/header.php' ?>
-    
+    <?php include '../plantillas/header.php' ?>
+
     <?php if (isset($_SESSION['rol'])): ?>
         <?php if ($_SESSION['rol'] == 1): ?>
-            <?php include 'menuAdmin.php'; ?>
+            <?php include '../plantillas/menuAdmin.php'; ?>
         <?php elseif ($_SESSION['rol'] == 2): ?>
-            <?php include 'menuEditor.php'; ?>
+            <?php include '../plantillas/menuEditor.php'; ?>
         <?php endif; ?>
     <?php endif; ?>
 
@@ -92,12 +93,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="mb-3">
                     <label for="codigo" class="form-label">Código:</label>
-                    <input type="text" class="form-control" id="codigo" name="codigo" value="<?= $codigoActual ?>" readonly required>
+                    <input type="text" class="form-control" id="codigo" name="codigo" value="<?= $codigoActual ?>"
+                        readonly required>
                 </div>
 
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre:</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" value="<?= $nombreActual ?>" required>
+                    <input type="text" class="form-control" id="nombre" name="nombre" value="<?= $nombreActual ?>"
+                        required>
                 </div>
 
                 <div class="mb-3">
@@ -111,12 +114,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="mb-3">
                     <label for="codCategoriaPadre" class="form-label">Categoría Padre:</label>
                     <select class="form-select" id="codCategoriaPadre" name="codCategoriaPadre">
-                        <option value="0" <?= ($categoriaPadreActual == 0) ? 'selected' : ''; ?>>Ninguna</option>
-                        <option value="1" <?= ($categoriaPadreActual == 1) ? 'selected' : ''; ?>>Escalada</option>
-                        <option value="2" <?= ($categoriaPadreActual == 2) ? 'selected' : ''; ?>>Vía Ferrata</option>
-                        <option value="3" <?= ($categoriaPadreActual == 3) ? 'selected' : ''; ?>>Barranquismo</option>
-                        <option value="4" <?= ($categoriaPadreActual == 4) ? 'selected' : ''; ?>>Rocódromo</option>
-                        <option value="5" <?= ($categoriaPadreActual == 5) ? 'selected' : ''; ?>>Trekking</option>
+                        <option value="0" <?= ($categoriaPadreActual == "0") ? 'selected' : ''; ?>>Padre</option>
+                        <?php foreach ($padres as $padre) { ?>
+                            <option value="<?= $padre["codigo"] ?>" <?= ($categoriaPadreActual == $padre["codigo"]) ? 'selected' : ''; ?>>
+                                <?= $padre["nombre"] ?>
+                            </option>
+                        <?php } ?>
                     </select>
                 </div>
 
@@ -131,4 +134,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php include '../plantillas/footer.php' ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

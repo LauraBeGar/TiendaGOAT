@@ -1,13 +1,13 @@
 <?php
 session_start();
 if (!isset($_SESSION['email'])) {
-    header('Location: ../paginas/login.php');
+    header('Location: login.php');
     exit();
 }
 
-require_once '../servidor/config.php';
-require_once '../gestores/GestorUsuarios.php';
-require_once '../gestores/Usuario.php';  
+require_once 'config.php';
+require_once 'GestorUsuarios.php';
+require_once 'Usuario.php';  
 
 $db = conectar();
 $gestor = new GestorUsuarios($db);
@@ -17,7 +17,7 @@ $usuario = $gestor->obtener_datos_usuario($email);
 
 $usuarioObj = new Usuario(
     $usuario['dni'],
-    
+    $usuario['clave'],
     $usuario['nombre'],
     $usuario['apellidos'],
     $usuario['direccion'],
@@ -26,7 +26,7 @@ $usuarioObj = new Usuario(
     $usuario['telefono'],
     $usuario['email'],
     $usuario['rol'],
-    $usuario['activo'],
+    $usuario['activo']
 );
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -50,10 +50,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $resultado = $gestor->actualizar_datos_usuario($usuarioObj);
 
     if ($resultado) {
-        header('Location: ../paginas/cuenta_usuario.php?mensaje=Información actualizada correctamente');
+        header('Location: cuenta_usuario.php?mensaje=Información actualizada correctamente');
         exit();
     } else {
-        header('Location: ../paginas/cuenta_usuario.php?mensaje=Error al actualizar la informacion');
+        header('Location: cuenta_usuario.php?mensaje=Error al actualizar la informacion');
         exit();
     }
 }
@@ -70,18 +70,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
-    <link rel="stylesheet" href="/estilos/style1.css">
+    <link rel="stylesheet" href="./estilos/style1.css">
 </head>
 
-<body class="d-flex flex-column min-vh-100"> <!-- Flexbox con altura mínima del 100% -->
-
-<?php include '../plantillas/header.php' ?>
-
-    <div class="container-fluid mt-4 flex-grow-1"> <!-- Flex-grow para que el contenido se expanda -->
-        <div class="row">
-            <div class="col-md-2">
-                <?php include '../plantillas/menu.php'; ?>
-            </div>
+<body>
+    <?php include 'header.php' ?>
+   <?php  include 'menu.php' ?>
+            <!-- Main Content Area -->
             <div class="col-md-7">
                 <div class="content text-center p-3">
                     <h2>Editar Información</h2>
@@ -92,11 +87,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                      <!-- Campo con label e input en línea -->
                     <div class="form-group d-flex justify-content-center mt-5">
                         <label for="dni" class="me-5">DNI:</label>
-                        <input type="text" id="dni" name="dni" class="form-control w-50 bg-light" value="<?php echo ($usuario['dni']); ?>" readonly>
+                        <input type="text" id="dni" name="dni" class="form-control w-50 bg-light" value="<?php echo htmlspecialchars($usuario['dni']); ?>" readonly>
                     </div>
                     <div class="form-group d-flex justify-content-center mt-5">
                         <label for="email" class="me-5">Email:</label>
-                        <input type="text" id="email" name="email" class="form-control w-50 bg-light" value="<?php echo ($usuario['email']); ?>" readonly>
+                        <input type="text" id="email" name="email" class="form-control w-50 bg-light" value="<?php echo htmlspecialchars($usuario['email']); ?>" readonly>
                     </div>
                     <div class="form-group d-flex justify-content-center mt-5">
                         <label for="nombre" class="me-5">Nombre:</label>
@@ -149,14 +144,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="logout mt-3 text-bold">
                         <a href="../controladores/logout.php"
-                            class="text-decoration-none text-danger font-weight-bold "> Cerrar sesión</a>
+                            class="text-decoration-none text-color-custom font-weight-bold "> Cerrar sesión</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     
-    <?php include '../plantillas/footer.php' ?>
+    <?php include 'footer.php' ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

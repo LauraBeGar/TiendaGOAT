@@ -9,8 +9,13 @@ if (!isset($_SESSION['email'])) {
 require_once '../servidor/config.php';
 require_once '../gestores/GestorProductos.php';
 require_once '../gestores/Producto.php';
+require_once '../gestores/GestorCategoria.php';
 
 $db = conectar();
+
+$gestor = new GestorCategorias($db);
+
+$categorias = $gestor->getOptionCategoria();
 
 if (isset($_GET['codigo'])) {
     $codigo = htmlspecialchars(trim($_GET['codigo']));
@@ -38,15 +43,15 @@ if (isset($_GET['codigo'])) {
 </head>
 
 <body>
-<?php include '../plantillas/header.php' ?>
-<?php include '../plantillas/menuAdmin.php' ?>
+    <?php include '../plantillas/header.php' ?>
+    <?php include '../plantillas/menuAdmin.php' ?>
     <div class="container my-5">
         <h1 class="text-center mb-4">Gestión de Productos</h1>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="content p-3">
                     <h2 class="text-center">Editar Información</h2>
-                    <form action="editarProducto.php" method="post" enctype="multipart/form-data">
+                    <form action="/servidor/editarProducto.php" method="post" enctype="multipart/form-data">
                         <div class="row g-3">
                             <input type="hidden" id="activo" name="activo" value="1">
                             <div class="col-md-6">
@@ -69,10 +74,11 @@ if (isset($_GET['codigo'])) {
                             <div class="col-md-6">
                                 <label for="categoria" class="form-label">Categoría</label>
                                 <select id="categoria" name="categoria" class="form-control" required>
-                                    <option value="1" <?= $producto['categoria']  ?>>1</option>
-                                    <option value="2" <?= $producto['categoria']  ?>>2</option>
-                                    <option value="3" <?= $producto['categoria']  ?>>3</option>
+                                    <?php foreach ($categorias as $categoria) { ?>
+                                        <option value="<?= $categoria["codigo"] ?>"><?= $categoria["nombre"] ?></option>
+                                    <?php } ?>
                                 </select>
+
                             </div>
                             <div class="col-md-6">
                                 <label for="precio" class="form-label">Precio</label>

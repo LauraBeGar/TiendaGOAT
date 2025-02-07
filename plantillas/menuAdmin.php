@@ -30,7 +30,7 @@
                     </li>
                     </li>
                     <li class="nav-item me-3">
-                        <a class="text-decoration-none text-color-custom " href="/paginas/gestion_categorias.php">Gestión de Pedidos</a>
+                        <a class="text-decoration-none text-color-custom " href="/paginas/gestion_pedidos.php">Gestión de Pedidos</a>
                     </li>
                     <li class="nav-item me-3">
                         <a class="text-decoration-none text-color-custom " href="informes.php">Informes</a>
@@ -38,7 +38,7 @@
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="text-decoration-none text-primary-custom" href="/servidor/logout.php">Cerrar Sesión</a>
+                        <a class="text-decoration-none text-primary-custom" href="../servidor/logout.php">Cerrar Sesión</a>
                     </li>
                 </ul>
             </div>

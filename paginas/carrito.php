@@ -39,7 +39,7 @@ $total = 0;
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($carrito as $productoID => $producto): ?>
+                <?php foreach ($carrito as $producto): ?>
                     <tr>
                         <td><?= $producto['nombre'] ?></td>
                         <td><?= $producto['cantidad'] ?></td>

@@ -1,49 +1,22 @@
 <?php
 session_start();
 if (!isset($_SESSION['email'])) {
-    header('Location: login.php');
+    header('Location: ../paginas/login.php?Inicia sesion o registrate para continuar con el pago ');
     exit();
 }
 
 require_once '../servidor/config.php';
 require_once '../gestores/GestorUsuarios.php';
-require_once '../gestores/Usuario.php'; 
+require_once '../gestores/Usuario.php';  
 
 $db = conectar();
 $gestor = new GestorUsuarios($db);
 
-if (isset($_GET['dni'])) {
-    $dni = $_GET['dni'];  
-    $usuario = $gestor->obtener_datos_dni($dni); 
-}
+$email = $_SESSION['email'];
+$usuario = $gestor->obtener_datos_usuario($email);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
-    $usuario = new Usuario(
-        $dni, 
-        htmlspecialchars(trim($_POST['nombre'])),
-        htmlspecialchars(trim($_POST['apellidos'])),
-        htmlspecialchars(trim($_POST['direccion'])),
-        htmlspecialchars(trim($_POST['localidad'])),
-        htmlspecialchars(trim($_POST['provincia'])),
-        htmlspecialchars(trim($_POST['telefono'])),
-        htmlspecialchars(trim($_POST['email'])),
-        $_POST['rol'],
-        $_POST['estado']
-    );
-
-    
-    $resultado = $gestor->actualizar_datos_usuario($usuario);
-
-    if ($resultado) {
-        header('Location: gestion_usuarios.php?mensaje=Información actualizada con éxito');
-        exit();
-    } else {
-       header('Location:gestion_usuarios.php?mensaje=error al actualizar la informacion');
-       exit();
-    }
-}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,25 +29,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
     <link rel="stylesheet" href="style1.css">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 <?php include '../plantillas/header.php' ?>
 <?php include '../plantillas/menuAdmin.php' ?>
-    <div class="container my-5">
-        <h1 class="text-center mb-4">Gestión de Usuarios</h1>
+<div class="container-fluid mt-4 flex-grow-1">
+    <div class="col-md-2">
+                <?php include '../plantillas/menu.php'; ?>
+            </div>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="content p-3">
-                    <h2 class="text-center">Editar Información</h2>
-                    <form action="" method="post">
+                    <h2 class="text-center">Completa los datos para seguir con la compra</h2>
+                    <form action="/servidor/usuario_checkout.php" method="post">
                         <div class="row">
                             <!-- Primera fila con dos columnas -->
                             <div class="col-md-6 mb-3">
                                 <label for="dni" class="form-label">DNI:</label>
-                                <input type="text" id="dni" name="dni" class="form-control" value="<?php echo htmlspecialchars($usuario['dni']); ?>" readonly>
+                                <input type="text" id="dni" name="dni" class="form-control" value="<?php echo $usuario['dni']; ?>" readonly>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="email" class="form-label">Email:</label>
-                                <input type="text" id="email" name="email" class="form-control" value="<?php echo htmlspecialchars($usuario['email']); ?>" readonly>
+                                <input type="text" id="email" name="email" class="form-control" value="<?php echo $usuario['email']; ?>" readonly>
                             </div>
                         </div>
 
@@ -113,40 +88,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <input type="text" id="telefono" name="telefono" class="form-control" value="<?php echo htmlspecialchars($usuario['telefono']); ?>">
                             </div>
                         </div>
-                                  <!-- Quinta fila con Rol y Estado -->
-                            <div class="col-md-6 mb-3">
-                                <label for="rol" class="form-label">Rol:</label>
-                                <select id="rol" name="rol" class="form-control">
-                                    <option value="0" <?php echo ($usuario['rol'] == 0) ? 'selected' : ''; ?>>0</option>
-                                    <option value="1" <?php echo ($usuario['rol'] == 1) ? 'selected' : ''; ?>>1</option>
-                                    <option value="2" <?php echo ($usuario['rol'] == 2) ? 'selected' : ''; ?>>2</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="estado" class="form-label">Estado (Activo):</label><br>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="activo" name="estado" value="1" <?php echo ($usuario['activo'] == 1) ? 'checked' : ''; ?>>
-                                    <label class="form-check-label" for="activo">1</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="inactivo" name="estado" value="0" <?php echo ($usuario['activo'] == 0) ? 'checked' : ''; ?>>
-                                    <label class="form-check-label" for="inactivo">0</label>
-                                </div>
-                            </div>
                         </div>
-
-                        <!-- Botón de submit -->
-                        <div class="d-flex justify-content-center mt-4">
-                        <button type="submit" class="btn bg-secondary-custom me-3">Guardar Cambios</button>
-                            <a href="gestion_usuarios.php" class="btn bg-secondary-custom">Cancelar</a>
-                        </div>
+                        <button type="submit" class="btn btn-primary text-center">Continuar</button>
                     </form>
+
                 </div>
             </div>
         </div>
     </div>
     <?php include '../plantillas/footer.php' ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

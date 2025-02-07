@@ -12,6 +12,8 @@ $nombre = htmlspecialchars(trim($_POST['nombre']));
 $apellidos = htmlspecialchars(trim($_POST['apellidos']));
 $email = htmlspecialchars(trim($_POST['email']));
 $clave = htmlspecialchars(trim($_POST['clave']));
+$rol = 0;
+$activo = 1;
 
 
 //validar la contraseña
@@ -19,7 +21,7 @@ if (strlen($clave) < 8 || strlen($clave) > 20 || !preg_match('/[a-zA-Z]/', $clav
     header("Location: ../paginas/registro.php?error=La contraseña debe tener entre 8 y 20 caracteres y al menos una letra.");
     exit();
 }
-$usuario = new Usuario($dni, $clave, $nombre, $apellidos, '', localidad: '', provincia: '', telefono: '', email: $email, rol: '', activo: $activo);
+$usuario = new Usuario($dni, $nombre, $apellidos, '', '', '', '', $email, $rol, $activo, $clave);
 
 $gestor = new GestorUsuarios($db);
 
@@ -30,7 +32,7 @@ if ($resultado === true) {
     header('Location:../paginas/login.php?success=Registro exitoso');
     exit();
 } else {
-    header('Location:../paginas/login.php?error=Error al registrar el usuario');
+    header('Location:../paginas/registro.php?error=Error al registrar el usuario');
     exit();
 }
 ?>

@@ -74,7 +74,7 @@ if (isset($_POST["email"]) || isset($_POST["dni"])) {
             <div class="row w-100">
                 <div class="col-md-6 col-lg-4 mx-auto bg-white p-4 rounded shadow-sm">
                     <h3 class="text-center mb-4">Cambiar Contraseña</h3>
-                    <form action="restablecerClave.php" method="post">
+                    <form action="/servidor/restablecerClave.php" method="post">
                         <div class="mb-3">
                             <label for="clave" class="form-label">Nueva Contraseña</label>
                             <input type="password" class="form-control" name="clave" id="clave" required>

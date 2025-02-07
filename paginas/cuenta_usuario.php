@@ -4,8 +4,8 @@ if (!isset($_SESSION['email'])) {
     header('Location: login.php');
     exit();
 }
-require_once 'config.php';
-require_once 'GestorUsuarios.php';
+require_once '../servidor/config.php';
+require_once '../gestores/GestorUsuarios.php';
 
 $db = conectar();
 $gestor = new GestorUsuarios($db);

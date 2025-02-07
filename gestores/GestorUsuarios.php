@@ -96,6 +96,8 @@ class GestorUsuarios{
         $nombre = $usuario->getNombre();
         $apellidos = $usuario->getApellidos();
         $email = $usuario->getEmail();
+        $rol = $usuario->getRol();
+        $activo = $usuario->getActivo();
         $clave = password_hash($usuario->getClave(), PASSWORD_DEFAULT);
 
         if (!$this->validarDni($dni)) {
@@ -119,19 +121,21 @@ class GestorUsuarios{
             exit();
         }
 
-        $sql = "INSERT INTO usuarios (dni, nombre, apellidos, email, clave, rol, activo) 
-                VALUES (:dni, :nombre, :apellidos, :email, :clave, 0, 1)";
+        $sql = "INSERT INTO usuarios (dni, nombre, apellidos, email, rol, activo, clave, direccion, localidad, provincia, telefono) 
+        VALUES (:dni, :nombre, :apellidos, :email, :rol, :activo, :clave, '', '', '', '')";
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->bindValue(':dni', $dni);
             $stmt->bindValue(':nombre', $nombre);
             $stmt->bindValue(':apellidos', $apellidos);
             $stmt->bindValue(':email', $email);
+            $stmt->bindValue(':rol', $rol);
+            $stmt->bindValue(':activo', $activo);
             $stmt->bindValue(':clave', $clave);
             $stmt->execute();
 
             if ($stmt->rowCount() > 0) {
-                header("Location: login.php?alert=¡Registrado! Ya puedes iniciar sesión.");
+                header("Location: ../paginas/login.php?alert=¡Registrado! Ya puedes iniciar sesión.");
                 exit();
             } else {
                 return "Error al insertar los valores.";
@@ -208,11 +212,11 @@ class GestorUsuarios{
                 if (password_verify($clave, $clave_hash)) {
                     return $usuario;
                 } else {
-                    header('Location: login.php?error=Contraseña incorrecta');
+                    header('Location: ../paginas/login.php?error=Contraseña incorrecta');
                     exit();
                 }
             } else {
-                header('Location: login.php?error=No hay usuarios registrados con ese email');
+                header('Location: ../paginas/login.php?error=No hay usuarios registrados con ese email');
                 exit();
             }
         } catch (PDOException $e) {
@@ -328,8 +332,7 @@ class GestorUsuarios{
             $lista_usuarios = [];
             foreach ($usuarios as $usuario) {
                 $lista_usuarios[] = new Usuario(
-                    $usuario['dni'], 
-                    null, 
+                    $usuario['dni'],  
                     $usuario['nombre'], 
                     $usuario['apellidos'], 
                     $usuario['direccion'], 
@@ -413,6 +416,28 @@ class GestorUsuarios{
             error_log("Error al cambiar la contraseña: " . $e->getMessage());
             return false;
         }
+    }
+    public function completarInfo ($dni, $direccion, $localidad, $provincia, $telefono){
+
+        $sql="UPDATE usuarios SET direccion = :direccion, localidad = :localidad, 
+        provincia = :provincia, telefono = :telefono WHERE dni = :dni";
+
+                try{
+                    $stmt = $this->db->prepare($sql);
+                    $stmt->bindParam(':dni', $dni, PDO::PARAM_STR);
+                    $stmt->bindParam(':direccion', $direccion, PDO::PARAM_STR);
+                    $stmt->bindParam(':localidad', $localidad, PDO::PARAM_STR);
+                    $stmt->bindParam(':provincia', $provincia, PDO::PARAM_STR);
+                    $stmt->bindParam(':telefono', $telefono, PDO::PARAM_STR);
+
+                    return $stmt->execute();
+
+
+                }catch(PDOException $e){
+                    echo 'error al completar la informacion' . $e->getMessage();
+                    return false;
+
+                }
     }
 
 }
