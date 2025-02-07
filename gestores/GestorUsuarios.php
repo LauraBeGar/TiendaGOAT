@@ -1,9 +1,11 @@
 <?php
 require_once 'Usuario.php';
-class GestorUsuarios{
+class GestorUsuarios
+{
     private $db;
 
-    public function __construct($db){
+    public function __construct($db)
+    {
         $this->db = $db;
     }
 
@@ -22,16 +24,17 @@ class GestorUsuarios{
         return false;
     }
 
-    public function validarEmail($email) 
+    public function validarEmail($email)
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return false;
         }
-    
+
         return preg_match('/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/', $email);
     }
 
-    public function email_existe($email){
+    public function email_existe($email)
+    {
         $sql = "SELECT email FROM usuarios WHERE email = :email";
 
         try {
@@ -68,7 +71,8 @@ class GestorUsuarios{
         }
     }
 
-    public function obtener_clave_db($email, $clave) {
+    public function obtener_clave_db($email, $clave)
+    {
         $sql = "SELECT clave FROM usuarios WHERE email = :email";
 
         try {
@@ -90,7 +94,8 @@ class GestorUsuarios{
         }
     }
 
-    public function registrar_usuario(Usuario $usuario) {
+    public function registrar_usuario(Usuario $usuario)
+    {
 
         $dni = $usuario->getDni();
         $nombre = $usuario->getNombre();
@@ -110,8 +115,8 @@ class GestorUsuarios{
             exit();
         }
 
-         //comprobar si el dni ya existe
-         if ($this->comprobarDni($dni)) {
+        //comprobar si el dni ya existe
+        if ($this->comprobarDni($dni)) {
             header("Location: registro.php?error=El DNI ya está registrado");
             exit();
         }
@@ -145,13 +150,14 @@ class GestorUsuarios{
         }
     }
 
-    public function crear_usuario(Usuario $usuario) {
+    public function crear_usuario(Usuario $usuario)
+    {
 
         $dni = $usuario->getDni();
         $nombre = $usuario->getNombre();
         $apellidos = $usuario->getApellidos();
         $direccion = $usuario->getDireccion();
-        $localidad = $usuario ->getLocalidad();
+        $localidad = $usuario->getLocalidad();
         $provincia = $usuario->getProvincia();
         $telefono = $usuario->getTelefono();
         $email = $usuario->getEmail();
@@ -192,8 +198,9 @@ class GestorUsuarios{
         }
     }
 
-    public function login($email, $clave) {
-        $sql = "SELECT email, nombre, clave, rol, activo FROM usuarios WHERE email = :email";
+    public function login($email, $clave)
+    {
+        $sql = "SELECT email, dni, nombre, clave, rol, activo FROM usuarios WHERE email = :email";
 
         try {
             $stmt = $this->db->prepare($sql);
@@ -225,7 +232,8 @@ class GestorUsuarios{
         }
     }
 
-    public function obtener_datos_usuario($email) {
+    public function obtener_datos_usuario($email)
+    {
         $sql = "SELECT dni, nombre, apellidos, direccion, localidad, provincia, telefono, email, rol, activo FROM usuarios WHERE email = :email";
 
         try {
@@ -240,7 +248,8 @@ class GestorUsuarios{
         }
     }
 
-    public function obtener_datos_dni($dni) {
+    public function obtener_datos_dni($dni)
+    {
         $sql = "SELECT * FROM usuarios WHERE dni = :dni";
 
         try {
@@ -255,7 +264,8 @@ class GestorUsuarios{
         }
     }
 
-    public function cambiar_clave($email, $nueva_clave) {
+    public function cambiar_clave($email, $nueva_clave)
+    {
         $nueva_clave = password_hash($nueva_clave, PASSWORD_DEFAULT);
         $sql = "UPDATE usuarios SET clave = :clave WHERE email = :email";
 
@@ -270,12 +280,13 @@ class GestorUsuarios{
         }
     }
 
-    public function actualizar_datos_usuario(Usuario $usuario) {
+    public function actualizar_datos_usuario(Usuario $usuario)
+    {
         $sql = "UPDATE usuarios SET nombre = :nombre, apellidos = :apellidos, direccion = :direccion, localidad = :localidad, provincia = :provincia, telefono = :telefono, email = :email, rol = :rol, activo = :activo WHERE dni = :dni";
-    
+
         try {
             $stmt = $this->db->prepare($sql);
-            
+
             // Almacena los valores en variables antes de pasarlos
             $dni = $usuario->getDni();
             $nombre = $usuario->getNombre();
@@ -287,7 +298,7 @@ class GestorUsuarios{
             $email = $usuario->getEmail();
             $rol = $usuario->getRol();
             $activo = $usuario->getActivo();
-    
+
             // Ahora pasa las variables a bindParam
             $stmt->bindParam(':dni', $dni, PDO::PARAM_STR);
             $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
@@ -299,17 +310,18 @@ class GestorUsuarios{
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
             $stmt->bindParam(':rol', $rol, PDO::PARAM_INT);
             $stmt->bindParam(':activo', $activo, PDO::PARAM_INT);
-    
+
             return $stmt->execute();
         } catch (PDOException $e) {
             echo "Error al actualizar los datos del usuario: " . $e->getMessage();
             return false;
         }
     }
-    
-    public function bajaUsuario($dni) {
+
+    public function bajaUsuario($dni)
+    {
         $sql = "UPDATE usuarios SET activo = 0 WHERE dni = :dni";
-        
+
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':dni', $dni, PDO::PARAM_STR);
@@ -320,7 +332,8 @@ class GestorUsuarios{
         }
     }
 
-    public function obtener_usuarios() {
+    public function obtener_usuarios()
+    {
         $sql = "SELECT dni, nombre, apellidos, direccion, localidad, provincia, telefono, email, rol, activo FROM usuarios";
 
         try {
@@ -332,13 +345,13 @@ class GestorUsuarios{
             $lista_usuarios = [];
             foreach ($usuarios as $usuario) {
                 $lista_usuarios[] = new Usuario(
-                    $usuario['dni'],  
-                    $usuario['nombre'], 
-                    $usuario['apellidos'], 
-                    $usuario['direccion'], 
-                    $usuario['localidad'], 
-                    $usuario['provincia'], 
-                    $usuario['telefono'], 
+                    $usuario['dni'],
+                    $usuario['nombre'],
+                    $usuario['apellidos'],
+                    $usuario['direccion'],
+                    $usuario['localidad'],
+                    $usuario['provincia'],
+                    $usuario['telefono'],
                     $usuario['email'],
                     $usuario['rol'],
                     $usuario['activo']
@@ -352,29 +365,31 @@ class GestorUsuarios{
         }
     }
 
-    public function ordenarUsuariosPorNombre ($orden){
+    public function ordenarUsuariosPorNombre($orden)
+    {
         $orden = strtoupper($orden) === 'DESC' ? 'DESC' : 'ASC';
         $sql = "SELECT dni, nombre, apellidos, direccion, localidad, provincia, telefono, email, rol, activo FROM usuarios ORDER BY nombre $orden";
-    
+
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
+
             $usuarios = [];
             foreach ($result as $row) {
                 $usuarios[] = new Usuario($row['dni'], "", $row['nombre'], $row['apellidos'], $row['direccion'], $row['localidad'], $row['provincia'], $row['telefono'], $row['email'], $row['rol'], $row['activo']);
             }
-    
+
             return $usuarios;
-    
+
         } catch (PDOException $e) {
             echo "Error al obtener los usuarios: " . $e->getMessage();
             return [];
         }
     }
-    
-    public function buscarUsuario ($busqueda){
+
+    public function buscarUsuario($busqueda)
+    {
         $sql = "SELECT dni, nombre, apellidos, direccion, localidad, provincia, telefono, email, rol, activo FROM usuarios WHERE nombre LIKE :busqueda OR dni LIKE :busqueda";
         try {
             $stmt = $this->db->prepare($sql);
@@ -382,62 +397,79 @@ class GestorUsuarios{
             $stmt->bindParam(':busqueda', $param);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
+
             $usuarios = [];
             foreach ($result as $row) {
                 $usuarios[] = new Usuario($row['dni'], "", $row['nombre'], $row['apellidos'], $row['direccion'], $row['localidad'], $row['provincia'], $row['telefono'], $row['email'], $row['rol'], $row['activo']);
             }
-    
+
             return $usuarios;
-    
+
         } catch (PDOException $e) {
             echo "Error al buscar el usuario: " . $e->getMessage();
             return [];
         }
     }
 
-    
-    public function restablecerClave($email, $clave) {
+
+    public function restablecerClave($email, $clave)
+    {
         $sql = "UPDATE usuarios SET clave = :clave WHERE email = :email";
-    
+
         $claveHash = password_hash($clave, PASSWORD_DEFAULT);
-    
+
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->bindValue(':email', $email, PDO::PARAM_STR);
             $stmt->bindValue(':clave', $claveHash, PDO::PARAM_STR);
-    
+
             if ($stmt->execute()) {
-                return true; 
+                return true;
             } else {
-                return false; 
+                return false;
             }
         } catch (PDOException $e) {
             error_log("Error al cambiar la contraseña: " . $e->getMessage());
             return false;
         }
     }
-    public function completarInfo ($dni, $direccion, $localidad, $provincia, $telefono){
+    public function completarInfo($dni, $direccion, $localidad, $provincia, $telefono)
+    {
 
-        $sql="UPDATE usuarios SET direccion = :direccion, localidad = :localidad, 
+        $sql = "UPDATE usuarios SET direccion = :direccion, localidad = :localidad, 
         provincia = :provincia, telefono = :telefono WHERE dni = :dni";
 
-                try{
-                    $stmt = $this->db->prepare($sql);
-                    $stmt->bindParam(':dni', $dni, PDO::PARAM_STR);
-                    $stmt->bindParam(':direccion', $direccion, PDO::PARAM_STR);
-                    $stmt->bindParam(':localidad', $localidad, PDO::PARAM_STR);
-                    $stmt->bindParam(':provincia', $provincia, PDO::PARAM_STR);
-                    $stmt->bindParam(':telefono', $telefono, PDO::PARAM_STR);
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':dni', $dni, PDO::PARAM_STR);
+            $stmt->bindParam(':direccion', $direccion, PDO::PARAM_STR);
+            $stmt->bindParam(':localidad', $localidad, PDO::PARAM_STR);
+            $stmt->bindParam(':provincia', $provincia, PDO::PARAM_STR);
+            $stmt->bindParam(':telefono', $telefono, PDO::PARAM_STR);
 
-                    return $stmt->execute();
+            return $stmt->execute();
 
 
-                }catch(PDOException $e){
-                    echo 'error al completar la informacion' . $e->getMessage();
-                    return false;
+        } catch (PDOException $e) {
+            echo 'error al completar la informacion' . $e->getMessage();
+            return false;
 
-                }
+        }
+    }
+
+    public function obtener_usuarios_estado($estado) {
+        $sql = "SELECT dni, nombre, apellidos, telefono, email FROM usuarios WHERE activo = :estado";
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':estado', $estado);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Error al obtener los clientes: " . $e->getMessage();
+            return [];
+        }
     }
 
 }
@@ -458,7 +490,7 @@ class GestorUsuarios{
 
 
 
-    
+
 
 
 

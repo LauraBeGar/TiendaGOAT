@@ -43,6 +43,7 @@ if (isset($_POST["email"]) || isset($_POST["dni"])) {
     <title>Olvidé mi contraseña</title>
     <!-- Incluir Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./estilos/style1.css">
 </head>
 <?php include '../plantillas/header.php' ?>
 

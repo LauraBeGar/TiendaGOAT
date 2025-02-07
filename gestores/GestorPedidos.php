@@ -1,28 +1,67 @@
 <?php
-class GestorPedidos {
+class GestorPedidos
+{
     private $db;
 
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->db = $db;
     }
 
     // Registrar un nuevo pedido
-    public function registrarPedido($cod_usuario, $total) {
+    public function registrarPedido($cod_usuario, $total, $idPedido)
+    {
         try {
-            $sql = "INSERT INTO pedidos (fecha, total, estado, cod_usuario, activo) 
-                    VALUES (CURDATE(), :total, 1, :cod_usuario, 1)";
+            $sql = "INSERT INTO pedidos (fecha, total, cod_usuario, idPedido) 
+                    VALUES (CURDATE(), :total, :cod_usuario, :idPedido)";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':total', $total);
             $stmt->bindParam(':cod_usuario', $cod_usuario);
+            $stmt->bindParam(':idPedido', $idPedido);
             $stmt->execute();
-            return $this->db->lastInsertId(); // Retorna el ID del nuevo pedido
+            return $stmt->rowCount() > 0;
         } catch (PDOException $e) {
             return "Error: " . $e->getMessage();
         }
     }
 
+    public function registrarLineaPedido($num_pedido, $cod_producto, $nombre_producto, $cantidad, $precio)
+    {
+        try {
+            $sql = "INSERT INTO linea_pedido (num_pedido, cod_producto, nombre_producto, cantidad, precio) 
+                    VALUES (:num_pedido, :cod_producto, :nombre_producto, :cantidad, :precio)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':num_pedido', $num_pedido, PDO::PARAM_INT);
+            $stmt->bindParam(':cod_producto', $cod_producto, PDO::PARAM_STR);
+            $stmt->bindParam(':cantidad', $cantidad, PDO::PARAM_INT);
+            $stmt->bindParam(':precio', $precio, PDO::PARAM_STR);
+            $stmt->bindParam(':nombre_producto', $nombre_producto, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->rowCount() > 0;
+        } catch (PDOException $e) {
+            return "Error: " . $e->getMessage();
+        }
+    }
+
+    public function ultimoId()
+    {
+        try {
+            $sql = "SELECT idPedido FROM pedidos order by idPedido DESC LIMIT 1";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $resultado ? $resultado['idPedido'] : 0;
+        } catch (PDOException $e) {
+            return "Error: " . $e->getMessage();
+        }
+
+    }
+
+
     // Modificar el estado de un pedido (ej. confirmado, en proceso, enviado)
-    public function modificarEstado($idPedido, $estado) {
+    public function modificarEstado($idPedido, $estado)
+    {
         try {
             $sql = "UPDATE pedidos SET estado = :estado WHERE idPedido = :idPedido";
             $stmt = $this->db->prepare($sql);
@@ -36,7 +75,8 @@ class GestorPedidos {
     }
 
     // Cancelar un pedido (activo = 0)
-    public function cancelarPedido($idPedido) {
+    public function cancelarPedido($idPedido)
+    {
         try {
             $sql = "UPDATE pedidos SET activo = 0 WHERE idPedido = :idPedido";
             $stmt = $this->db->prepare($sql);
@@ -49,7 +89,8 @@ class GestorPedidos {
     }
 
     // Obtener un pedido por su ID
-    public function obtenerPedido($idPedido) {
+    public function obtenerPedido($idPedido)
+    {
         try {
             $sql = "SELECT * FROM pedidos WHERE idPedido = :idPedido";
             $stmt = $this->db->prepare($sql);
@@ -62,7 +103,8 @@ class GestorPedidos {
     }
 
     // Obtener todos los pedidos de un usuario
-    public function obtenerPedidosUsuario($cod_usuario) {
+    public function obtenerPedidosUsuario($cod_usuario)
+    {
         try {
             $sql = "SELECT * FROM pedidos WHERE cod_usuario = :cod_usuario";
             $stmt = $this->db->prepare($sql);
@@ -74,16 +116,62 @@ class GestorPedidos {
         }
     }
 
-    // Listar todos los pedidos
-public function listarPedidos() {
-    try {
-        $sql = "SELECT * FROM pedidos";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna todos los pedidos
-    } catch (PDOException $e) {
-        return "Error: " . $e->getMessage();
+    public function obtenerLineasPedidos($idPedido)
+    {
+        try {
+            $sql = "SELECT * FROM linea_pedido WHERE num_pedido = :idPedido";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':idPedido', $idPedido);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna todos los pedidos del usuario
+        } catch (PDOException $e) {
+            return "Error: " . $e->getMessage();
+        }
     }
-}
+
+    // Listar todos los pedidos
+    public function listarPedidos()
+    {
+        try {
+            $sql = "SELECT * FROM pedidos";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna todos los pedidos
+        } catch (PDOException $e) {
+            return "Error: " . $e->getMessage();
+        }
+    }
+
+    public function listarPedidosEstado($estado)
+    {
+        try {
+            $sql = "SELECT * FROM pedidos WHERE estado = :estado";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':estado', $estado);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna todos los pedidos
+        } catch (PDOException $e) {
+            return "Error: " . $e->getMessage();
+        }
+    }
+
+
+    public function obtenerPedidosFecha($orden)
+    {
+        $sql = "SELECT * FROM pedidos order by fecha $orden";
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            echo "Error al obtener los productos: " . $e->getMessage();
+            return false;
+        }
+    }
+
+
 }
 ?>

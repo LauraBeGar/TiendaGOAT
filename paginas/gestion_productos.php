@@ -20,8 +20,8 @@ if ($pagina < 1)
 //indice de inicio, primer articulo que se mostrara en la pagina 
 $inicio = ($pagina - 1) * $productosPorPagina;
 
-//artículos paginados
-$productos = $gestor->getProductosPag($inicio, $productosPorPagina);
+// Obtener artículos paginados
+$productos = $gestor->getProductosPag($inicio, $productosPorPagina, "");
 
 // Obtener total de artículos
 $totalProductos = count($gestor->obtenerProductos());

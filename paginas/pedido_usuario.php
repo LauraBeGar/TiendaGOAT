@@ -1,9 +1,21 @@
 <?php
 session_start();
+
 if (!isset($_SESSION['email'])) {
     header('Location: login.php');
     exit();
 }
+
+require_once '../servidor/config.php';
+require_once '../gestores/GestorPedidos.php';
+
+$db = conectar();
+
+$gestor = new GestorPedidos($db);
+
+$cod_usuario = $_SESSION['dni'];
+
+$resultado = $gestor -> obtenerPedidosUsuario($cod_usuario)
 ?>
 
 
@@ -40,17 +52,28 @@ if (!isset($_SESSION['email'])) {
                                 <th>Total</th>
                                 <th>Estado</th>
                                 <th>Ver</th>
-
+                                <th>Cancelar</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php foreach($resultado as $item){ ?>
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td><?=$item['idPedido']?></td>
+                                <td><?=$item['fecha']?></td>
+                                <td><?=$item['total']?>€</td>
+                                <td><?=$item['estado']?></td>
+                                <td>
+                                <a href="ver_Pedido.php?idPedido=<?php echo htmlspecialchars($item['idPedido']); ?>">
+                                <i class="fa fa-eye"></i>  
+                                
+
+                                </td>
+                                <td>
+                                <a href="cancelarPedido.php?idPedido=<?php echo htmlspecialchars($item['idPedido']); ?>">
+                                <i class="fas fa-trash-alt"></i>
+                                </td>
                             </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>

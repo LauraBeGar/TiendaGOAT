@@ -27,7 +27,7 @@ $total = 0;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
     <link rel="stylesheet" href="./estilos/style1.css">
-    <script src="https://www.paypal.com/sdk/js?client-id=AatFFr-FGc6ySpoQTMGOKuvcDeWAf7z_svG4eAIr5MzvBm1m789_-CKj4_ULI1c_Xw5ZYS9y2p-NAooQ&currency=EUR"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AZDVjHKXhhyyBowBuhZDWeXpb3i7erkmqjSnH20QQVweow5GsOEeOISBD-hlQXtHie2lhnGlWViQGexa&currency=EUR"></script>
 </head>
 <body class="d-flex flex-column min-vh-100"> <!-- Flexbox con altura mínima del 100% -->
 
@@ -71,6 +71,7 @@ $total = 0;
                             </tr>
                         </tbody>
                     </table>
+                    <!-- <a href="../servidor/registrarPedido.php" class="button">continuar</a> -->
                 </div>
 
              
@@ -93,7 +94,11 @@ $total = 0;
                         onApprove: function(data, actions) {
                             return actions.order.capture().then(function(details) {
                                 // Redirige a una página de éxito con los detalles de la transacción
-                                window.location.href = "gracias.php?orderID=" + details.id;
+                                fetch("../servidor/registrarPedido.php" )
+                                .then(response => response.json())
+                                .then(data => {
+                                    window.location.href = data
+                                })
                             });
                         },
                         onCancel: function(data) {

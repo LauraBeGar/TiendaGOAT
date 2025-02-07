@@ -1,17 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda GOAT</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
-    <link rel="stylesheet" href="../estilos/style1.css">
-</head>
-
-<body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
         <div class="container-fluid">
             <a class="navbar-brand" href="/paginas/panel_editor.php">Panel de Editor</a>
@@ -42,6 +29,3 @@
             </div>
         </div>
     </nav>
-
-</body>
-</html>

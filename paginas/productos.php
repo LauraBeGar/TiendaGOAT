@@ -20,7 +20,8 @@ $catProds = isset($_GET['catProds']) ? $_GET['catProds'] : null;
 
 $db = conectar();
 $gestor = new GestorProductos($db);
-$productosCat = $gestor->getProductosPorCategoria($catProds);
+$orden = $_GET["orden"] ?? "";
+$productosCat = $gestor->getProductosPorCategoria($catProds, $orden);
 
 $gestorCategoria = new GestorCategorias($db);
 
@@ -37,10 +38,10 @@ if ($pagina < 1)
 $inicio = ($pagina - 1) * $productosPorPagina;
 
 // Obtener artículos paginados
-$productos = $gestor->getProductosPag($inicio, $productosPorPagina);
+$productos = $gestor->getProductosPag($inicio, $productosPorPagina, $orden);
 
 // Obtener total de artículos
-$totalProductos = count($gestor->obtenerProductos());
+$totalProductos = count($gestor->getProductosPorCategoria($catProds, $orden));
 $totalPaginas = ceil($totalProductos / $productosPorPagina);
 ?>
 <!DOCTYPE html>
@@ -58,8 +59,6 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
 
 <body>
     <?php include '../plantillas/header.php'; ?>
-
-
     <div class="container-fluid mt-4">
         <div class="row">
             <!-- Columna del menú -->
@@ -76,7 +75,15 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
                          ?>
                     </h3>
                 </div>
+                <div class="row">
+                    <div class="col">
+                        <a href="?orden=ASC&catProds=<?= $catProds ?>">Más baratos</a>
+                    </div>
+                    <div class="col">
+                        <a href="?orden=DESC&catProds=<?= $catProds ?>">Más caros</a>
 
+                    </div>
+                </div>
                 <div class="row g-4">
                     <?php 
                     foreach ($productosCat as $producto): ?>
@@ -84,7 +91,7 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
                             <div class="card" style="width: 17rem;">
                                 <!-- Contenido de la tarjeta del producto -->
                                 <?php if (!empty($producto["imagen"])): ?>
-                                    <img src="../img/<?= $producto["imagen"] ?>" class="card-img-top"
+                                    <img src="/img/<?= $producto["imagen"] ?>" class="card-img-top"
                                         alt="<?= $producto["nombre"] ?>"
                                         style="width: 100%; height: 250px; object-fit: cover;">
                                 <?php else: ?>
