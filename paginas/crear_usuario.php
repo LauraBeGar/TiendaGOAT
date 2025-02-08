@@ -1,20 +1,31 @@
+<?php 
+session_start(); 
+include '../servidor/seguridadAdmin.php';
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda GOAT</title>
+    <title>Alta usuario</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
-    <link rel="stylesheet" href="style1.css">
+    <link rel="stylesheet" href="../estilos/style1.css">
 </head>
 
-<body>
-<?php include '../plantillas/header.php' ?>
-<?php include '../plantillas/menuAdmin.php' ?>
-    <div class="container my-5">
+
+<body class="d-flex flex-column min-vh-100">
+
+    <?php include_once '../plantillas/header.php' ?>
+    <?php
+    include '../plantillas/menuAdmin.php';
+    ?>
+
+    <div class="container-fluid mt-4 flex-grow-1">
         <h1 class="text-center mb-4">Gestión de Usuarios</h1>
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -105,8 +116,9 @@
                 </div>
             </div>
         </div>
+        <?php include '../plantillas/footer.php' ?>
     </div>
-    <?php include '../plantillas/footer.php' ?>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

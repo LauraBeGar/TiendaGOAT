@@ -1,13 +1,10 @@
 <?php
 session_start();
-if (!isset($_SESSION['email'])) {
-    header('Location: login.php');
-    exit();
-}
 
 require_once '../servidor/config.php';
-require_once '../gestores/GestorUsuarios.php';
-require_once '../gestores/Usuario.php'; 
+include_once '../gestores/GestorUsuarios.php';
+include_once '../gestores/Usuario.php'; 
+require_once '../servidor/seguridadAdmin.php';
 
 $db = conectar();
 $gestor = new GestorUsuarios($db);
@@ -50,16 +47,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda GOAT</title>
+    <title>Editar</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
-    <link rel="stylesheet" href="style1.css">
+    <link rel="stylesheet" href="../estilos/style1.css">
 </head>
-<body>
-<?php include '../plantillas/header.php' ?>
-<?php include '../plantillas/menuAdmin.php' ?>
-    <div class="container my-5">
+<body class="d-flex flex-column min-vh-100">
+
+    <?php include_once '../plantillas/header.php' ?>
+    <?php
+    include '../plantillas/menuAdmin.php';
+    ?>
+    <div class="container-fluid mt-4 flex-grow-1">
         <h1 class="text-center mb-4">Gestión de Usuarios</h1>
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         <!-- Botón de submit -->
-                        <div class="d-flex justify-content-center mt-4">
+                        <div class="d-flex justify-content-center mt-4 mb-5">
                         <button type="submit" class="btn bg-secondary-custom me-3">Guardar Cambios</button>
                             <a href="gestion_usuarios.php" class="btn bg-secondary-custom">Cancelar</a>
                         </div>

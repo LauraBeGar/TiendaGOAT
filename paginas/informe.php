@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-require_once '../servidor/seguridadAdmin.php';
-include '../servidor/config.php';
+require_once '../servidor/seguridad.php';
+require_once '../servidor/config.php';
 $db = conectar();
 
 
@@ -42,6 +42,9 @@ if ($tipo == 1 || $tipo == 2) {//Usuarios
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informes</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="../estilos/style1.css">
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -51,10 +54,7 @@ if ($tipo == 1 || $tipo == 2) {//Usuarios
 
 
     <div class="container-fluid mt-4 flex-grow-1">
-        <div class="row ">
-            <div class="col-md-2">
-                <?php include '../plantillas/menu.php'; ?>
-            </div>
+        <div class="row justify-content-center">
 
             <div class="col-md-8 text-center">
                 <h1 class="mb-4"><?= $informe ?></h1>
@@ -108,30 +108,30 @@ if ($tipo == 1 || $tipo == 2) {//Usuarios
                                 </tbody>
                             </table>
                     <?php } else { ?>
-                            <div class="row">
+                            <div class="row justify-content-center mb-5">
                             <?php if ($tipo == 5) { ?>
                                     <div class="col">
-                                        <a href="?informe=Estados de pedidos&tipo=5&estado=Proceso">Proceso</a>
+                                        <a href="?informe=Estados de pedidos&tipo=5&estado=Proceso"class="btn btn-warning text-dark">Proceso</a>
                                     </div>
                                     <div class="col">
-                                        <a href="?informe=Estados de pedidos&tipo=5&estado=Preparando">Preparando</a>
+                                        <a href="?informe=Estados de pedidos&tipo=5&estado=Preparando"class="btn btn-warning text-dark">Preparando</a>
                                     </div>
                                     <div class="col">
-                                        <a href="?informe=Estados de pedidos&tipo=5&estado=Enviado">Enviado</a>
+                                        <a href="?informe=Estados de pedidos&tipo=5&estado=Enviado"class="btn btn-warning text-dark">Enviado</a>
                                     </div>
                                     <div class="col">
-                                        <a href="?informe=Estados de pedidos&tipo=5&estado=Entregado">Entregado</a>
+                                        <a href="?informe=Estados de pedidos&tipo=5&estado=Entregado"class="btn btn-warning text-dark">Entregado</a>
                                     </div>
                                     <div class="col">
-                                        <a href="?informe=Estados de pedidos&tipo=5&estado=Cancelado">Cancelado</a>
+                                        <a href="?informe=Estados de pedidos&tipo=5&estado=Cancelado"class="btn btn-warning text-dark">Cancelado</a>
                                     </div>
                             <?php } else { ?>
                                     <div class="col">
-                                        <a href="?informe=Estados de pedidos&tipo=6&orden=ASC">Más viejos</a>
+                                        <a href="?informe=Estados de pedidos&tipo=6&orden=ASC"class="btn btn-outline-warning text-dark">Antiguos</a>
 
                                     </div>
                                     <div class="col">
-                                        <a href="?informe=Estados de pedidos&tipo=6&orden=DESC">Más nuevos</a>
+                                        <a href="?informe=Estados de pedidos&tipo=6&orden=DESC"class="btn btn-outline-warning text-dark">Recientes</a>
 
                                     </div>
                             <?php } ?>
@@ -162,7 +162,7 @@ if ($tipo == 1 || $tipo == 2) {//Usuarios
 
                 </div>
 
-
+<a href="informes.php" class="btn bg-primary-custom link-hover-custom mt-3 mb-5">Volver</a>
             </div>
         </div>
     </div>

@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-include_once '../servidor/seguridad.php';
-include_once '../servidor/config.php';
+require_once '../servidor/config.php';
 include_once '../gestores/GestorCategoria.php';
+require_once '../servidor/seguridad.php';
 
 $db = conectar();
 
@@ -19,13 +19,20 @@ $categorias = $gestor->getOptionCategoria();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alta de Artículo</title>
+    <title>Alta Producto</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="../estilos/style1.css">
 </head>
 
 <body>
     <?php include '../plantillas/header.php' ?>
-    <?php include '../plantillas/menuAdmin.php' ?>
+    <?php
+        include '../plantillas/menuAdmin.php';
+    
+        include '../plantillas/menuEditor.php';
+    ?>
 
     <div class="container my-5">
         <h1 class="text-center mb-4">Gestión de Productos</h1>
@@ -84,8 +91,6 @@ $categorias = $gestor->getOptionCategoria();
             </div>
         </div>
     </div>
-
-    <!-- Incluir Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <?php include '../plantillas/footer.php' ?>
 </body>

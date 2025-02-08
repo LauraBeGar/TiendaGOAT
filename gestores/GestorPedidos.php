@@ -59,7 +59,7 @@ class GestorPedidos
     }
 
 
-    // Modificar el estado de un pedido (ej. confirmado, en proceso, enviado)
+    // Modificar el estado de un pedido
     public function modificarEstado($idPedido, $estado)
     {
         try {
@@ -68,7 +68,7 @@ class GestorPedidos
             $stmt->bindParam(':estado', $estado);
             $stmt->bindParam(':idPedido', $idPedido);
             $stmt->execute();
-            return $stmt->rowCount() > 0; // Si se actualizó correctamente, retorna true
+            return $stmt->rowCount() > 0;
         } catch (PDOException $e) {
             return "Error: " . $e->getMessage();
         }
@@ -82,7 +82,7 @@ class GestorPedidos
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':idPedido', $idPedido);
             $stmt->execute();
-            return $stmt->rowCount() > 0; // Si se canceló correctamente, retorna true
+            return $stmt->rowCount() > 0;
         } catch (PDOException $e) {
             return "Error: " . $e->getMessage();
         }
@@ -96,12 +96,41 @@ class GestorPedidos
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':idPedido', $idPedido);
             $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna los datos del pedido
+            return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return "Error: " . $e->getMessage();
         }
     }
 
+    public function buscarPedido($busqueda)
+    {
+        $sql = "SELECT idPedido, fecha, total, estado, cod_usuario  FROM pedidos WHERE idPedido LIKE :busqueda";
+        try {
+            $stmt = $this->db->prepare($sql);
+            $param = "%" . $busqueda . "%";
+            $stmt->bindParam(':busqueda', $param);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $pedidos = [];
+            foreach ($result as $row) {
+                $pedidos[] = new Pedido(
+                    $row['idPedido'],
+                    $row['fecha'],
+                    $row['total'],
+                    $row['estado'],
+                    $row['cod_usuario']
+                );
+
+            }
+
+            return $pedidos;
+
+        } catch (PDOException $e) {
+            echo "Error al buscar el producto: " . $e->getMessage();
+            return [];
+        }
+    }
     // Obtener todos los pedidos de un usuario
     public function obtenerPedidosUsuario($cod_usuario)
     {
@@ -110,11 +139,24 @@ class GestorPedidos
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':cod_usuario', $cod_usuario);
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna todos los pedidos del usuario
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            $pedidos = [];
+            foreach ($result as $row) {
+                $pedidos[] = new Pedido(
+                    $row['idPedido'],
+                    $row['fecha'],
+                    $row['total'],
+                    $row['estado'],
+                    $row['cod_usuario']
+                );
+            }
+            return $pedidos;
         } catch (PDOException $e) {
             return "Error: " . $e->getMessage();
         }
     }
+    
 
     public function obtenerLineasPedidos($idPedido)
     {
@@ -123,7 +165,7 @@ class GestorPedidos
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':idPedido', $idPedido);
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna todos los pedidos del usuario
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return "Error: " . $e->getMessage();
         }
@@ -136,9 +178,40 @@ class GestorPedidos
             $sql = "SELECT * FROM pedidos";
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna todos los pedidos
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return "Error: " . $e->getMessage();
+        }
+    }
+
+    public function obtenerPedidos()
+    {
+        $sql = "SELECT * FROM pedidos";
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $lista_pedidos = [];
+            foreach ($result as $row) {
+                $lista_categorias[] = new Pedido(
+
+                    $row['idPedido'],
+                    $row['fecha'],
+                    $row['total'],
+                    $row['estado'],
+                    $row['cod_usuario']
+
+                );
+            }
+
+            return $lista_categorias;
+
+        } catch (PDOException $e) {
+            echo "Error al obtener los productos: " . $e->getMessage();
+            return false;
         }
     }
 
@@ -149,7 +222,7 @@ class GestorPedidos
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':estado', $estado);
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna todos los pedidos
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return "Error: " . $e->getMessage();
         }
@@ -172,6 +245,34 @@ class GestorPedidos
         }
     }
 
+    public function getPedidosPag($inicio, $cantidad)
+    {
+        $sql = "SELECT * FROM pedidos LIMIT :inicio, :cantidad";
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindValue(':inicio', (int) $inicio, PDO::PARAM_INT);
+            $stmt->bindValue(':cantidad', (int) $cantidad, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $pedidos = [];
+            foreach ($result as $row) {
+                $pedidos[] = new Pedido(
+                    $row['idPedido'],
+                    $row['fecha'],
+                    $row['total'],
+                    $row['estado'],
+                    $row['cod_usuario'],
+
+
+                );
+            }
+            return $pedidos;
+        } catch (PDOException $e) {
+            echo "Error al obtener los productos: " . $e->getMessage();
+            return [];
+        }
+    }
 
 }
 ?>

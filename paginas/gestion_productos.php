@@ -1,7 +1,8 @@
 <?php
 session_start();
-include '../gestores/GestorProductos.php';
-include '../servidor/config.php';
+include_once '../gestores/GestorProductos.php';
+require_once '../servidor/config.php';
+require_once '../servidor/seguridad.php';
 
 $db = conectar();
 
@@ -45,19 +46,15 @@ if (isset($_GET['ordenar']) && $_GET['ordenar'] == 'nombre') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
-    <link rel="stylesheet" href="style1.css">
+    <link rel="stylesheet" href="../estilos/style1.css">
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <?php include '../plantillas/header.php' ?>
-    <?php if ($_SESSION['rol']==1){
-         include '../plantillas/menuAdmin.php';
-    }elseif($_SESSION['rol']==2){
-        include '../plantillas/menuEditor.php';
-
-    }
-      ?>
-
+    <?php
+    include '../plantillas/menuAdmin.php';
+    include '../plantillas/menuEditor.php';
+    ?>
     <div class="container my-5">
         <h1 class="text-center mb-4">Gestión de Productos</h1>
 
@@ -83,7 +80,6 @@ if (isset($_GET['ordenar']) && $_GET['ordenar'] == 'nombre') {
         </form>
     </div>
 
-        <!-- Tabla de clientes -->
         <div class="table-container">
             <table class="table table-striped table-bordered">
                 <thead class="table-dark">

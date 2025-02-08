@@ -1,5 +1,6 @@
 <?php 
-if ($_SESSION['rol'] != 0){
+
+if ($_SESSION['rol'] === 1){
 
 
 ?>

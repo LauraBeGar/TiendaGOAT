@@ -1,3 +1,4 @@
+
 <?php
 require_once __DIR__ . '/../servidor/config.php';
 require_once __DIR__ . '/../gestores/GestorCategoria.php';

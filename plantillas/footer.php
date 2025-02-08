@@ -1,5 +1,5 @@
 
-    <footer class="w-100 bg-dark text-white">
+    <footer class="w-100 bg-dark text-white mt-auto w-100">
         <div class="container-lg p-3 text-center">
             <div class="row justify-content-center pt-3">
                 <!-- Columna 1 -->

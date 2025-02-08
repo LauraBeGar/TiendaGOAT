@@ -1,8 +1,9 @@
 <?php
 session_start();
 
-include_once '../servidor/config.php';
+require_once '../servidor/config.php';
 include_once '../gestores/GestorUsuarios.php';
+require_once '../servidor/seguridadUsuario.php';
 
 // Verifica si el carrito está vacío, redirige si es necesario
 if (!isset($_SESSION['carrito']) || empty($_SESSION['carrito'])) {
@@ -26,22 +27,22 @@ $total = 0;
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
-    <link rel="stylesheet" href="./estilos/style1.css">
+    <link rel="stylesheet" href="../estilos/style1.css">
     <script src="https://www.paypal.com/sdk/js?client-id=AZDVjHKXhhyyBowBuhZDWeXpb3i7erkmqjSnH20QQVweow5GsOEeOISBD-hlQXtHie2lhnGlWViQGexa&currency=EUR"></script>
 </head>
-<body class="d-flex flex-column min-vh-100"> <!-- Flexbox con altura mínima del 100% -->
+<body class="d-flex flex-column min-vh-100"> 
 
 <?php include '../plantillas/header.php' ?>
 
-    <div class="container-fluid mt-4 flex-grow-1"> <!-- Flex-grow para que el contenido se expanda -->
+    <div class="container-fluid mt-4 flex-grow-1"> 
         <div class="row">
             <div class="col-md-2">
                 <?php include '../plantillas/menu.php'; ?>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-8">
                 <h2 class="mb-4">Resumen de Pedido</h2>
 
-                <!-- Resumen de productos -->
+              
                 <div class="mb-4">
                     <h5>Productos en el pedido</h5>
                     <table class="table">
@@ -76,7 +77,7 @@ $total = 0;
 
              
  <!-- Botón PayPal con SDK -->
- <div class="text-center">
+ <div class="align-items-center w-25">
                     <div id="paypal-button-container"></div>
                 </div>
 
@@ -108,6 +109,7 @@ $total = 0;
                     }).render('#paypal-button-container');
                 </script>
             </div>
+            <?php include '../plantillas/menuUsuario.php' ?>
         </div>
     </div>
 

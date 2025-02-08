@@ -30,7 +30,7 @@ $inicio = ($pagina - 1) * $productosPorPagina;
 
 $orden = $_GET["orden"] ?? "";
 // Obtener artículos paginados
-$productos = $gestor->getProductosPag($inicio, $productosPorPagina, $orden);
+$productos = $gestor->getProductosPagActivos($inicio, $productosPorPagina, $orden);
 
 // Obtener total de artículos
 $totalProductos = count($gestor->obtenerProductos());
@@ -62,13 +62,12 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
 
             <!-- Columna de productos -->
             <div class="col-md-10">
-                <div class="row">
-                    <div class="col">
-                        <a href="?orden=ASC">Más baratos</a>
+                <div class="row justify-content-end mb-5">
+                    <div class="col-md-3">
+                        <a href="?pagina=<?= $pagina ?>&orden=ASC" class="btn btn-outline-warning text-dark" >Filtrar por precio menor</a>
                     </div>
-                    <div class="col">
-                        <a href="?orden=DESC">Más caros</a>
-
+                    <div class="col-md-3">
+                        <a href="?pagina=<?= $pagina ?>&orden=DESC" class="btn btn-outline-warning text-dark" >Filtrar por precio mayor</a>
                     </div>
                 </div>
                 <div class="row g-4">
@@ -99,25 +98,25 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
     </div>
 
     <nav>
-        <ul class="pagination justify-content-center mt-4">
-            <?php if ($pagina > 1): ?>
-                <li class="page-item">
-                    <a class="page-link border border-warning text-dark" href="?pagina=<?= $pagina - 1 ?>">Anterior</a>
-                </li>
-            <?php endif; ?>
-            <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-                <li class="page-item">
-                    <a class="page-link border border-warning text-dark <?= $pagina == $i ? 'active bg-warning text-dark' : '' ?>"
-                        href="?pagina=<?= $i ?>"><?= $i ?></a>
-                </li>
-            <?php endfor; ?>
-            <?php if ($pagina < $totalPaginas): ?>
-                <li class="page-item">
-                    <a class="page-link border border-warning text-dark" href="?pagina=<?= $pagina + 1 ?>">Siguiente</a>
-                </li>
-            <?php endif; ?>
-        </ul>
-    </nav>
+    <ul class="pagination justify-content-center mt-4">
+        <?php if ($pagina > 1): ?>
+            <li class="page-item">
+                <a class="page-link border border-warning text-dark" href="?pagina=<?= $pagina - 1 ?>&orden=<?= $orden ?>">Anterior</a>
+            </li>
+        <?php endif; ?>
+        <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+            <li class="page-item">
+                <a class="page-link border border-warning text-dark <?= $pagina == $i ? 'active bg-warning text-dark' : '' ?>"
+                    href="?pagina=<?= $i ?>&orden=<?= $orden ?>"><?= $i ?></a>
+            </li>
+        <?php endfor; ?>
+        <?php if ($pagina < $totalPaginas): ?>
+            <li class="page-item">
+                <a class="page-link border border-warning text-dark" href="?pagina=<?= $pagina + 1 ?>&orden=<?= $orden ?>">Siguiente</a>
+            </li>
+        <?php endif; ?>
+    </ul>
+</nav>
 
     <?php include './plantillas/footer.php'; ?>
 

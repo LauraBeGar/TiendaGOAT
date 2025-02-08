@@ -5,16 +5,16 @@ class Pedido {
     private $total;
     private $estado;
     private $cod_usuario;
-    private $activo;
+  
 
     // Constructor
-    public function __construct($idPedido, $fecha, $total, $estado, $cod_usuario, $activo) {
+    public function __construct($idPedido, $fecha, $total, $estado, $cod_usuario) {
         $this->idPedido = $idPedido;
         $this->fecha = $fecha;
         $this->total = $total;
         $this->estado = $estado;
         $this->cod_usuario = $cod_usuario;
-        $this->activo = $activo;
+       
         
     }
 
@@ -58,12 +58,5 @@ class Pedido {
         $this->cod_usuario = $cod_usuario;
     }
 
-    public function getActivo() {
-        return $this->activo;
-    }
-
-    public function setActivo($activo) {
-        $this->activo = $activo;
-    }
 }
 ?>

@@ -136,6 +136,36 @@ class GestorProductos
             return [];
         }
     }
+    public function getProductosPagActivos($inicio, $cantidad, $orden)
+    {
+        $sql = "SELECT * FROM productos WHERE activo = 1 order by precio $orden LIMIT :inicio, :cantidad";
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindValue(':inicio', (int) $inicio, PDO::PARAM_INT);
+            $stmt->bindValue(':cantidad', (int) $cantidad, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $productos = [];
+            foreach ($result as $row) {
+                $productos[] = new Producto(
+                    $row['codigo'],
+                    $row['nombre'],
+                    $row['descripcion'],
+                    $row['imagen'],
+                    $row['categoria'],
+                    $row['precio'],
+                    $row['activo']
+
+                );
+            }
+            return $productos;
+        } catch (PDOException $e) {
+            echo "Error al obtener los productos: " . $e->getMessage();
+            return [];
+        }
+    }
 
     public function editar(Producto $producto)
     {
@@ -233,7 +263,7 @@ class GestorProductos
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC); 
         } catch (PDOException $e) {
-            echo "Error al ob: " . $e->getMessage();
+            echo "Error al obtener el producto: " . $e->getMessage();
         }
     }
 
@@ -253,6 +283,8 @@ class GestorProductos
             return false;
         }
     }
+
+    
 
 
 

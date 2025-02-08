@@ -1,22 +1,12 @@
 <?php
 session_start();
 
-/*if (!isset($_SESSION['email'])) {
-    header('Location: login.php');
-    exit();
-}*/
-
-
 require_once '../servidor/config.php';
-require_once('../gestores/Usuario.php');
-require_once('../gestores/GestorUsuarios.php');
 require_once('../gestores/Producto.php');
 require_once('../gestores/GestorProductos.php');
 require_once('../gestores/GestorCategoria.php');
 
-//Obtenemos la categoría pasada por parámetro en la url
 $catProds = isset($_GET['catProds']) ? $_GET['catProds'] : null;
-// $categoria = isset($_GET['categoria']) ? strval($_GET['categoria']) : '';
 
 $db = conectar();
 $gestor = new GestorProductos($db);
@@ -54,19 +44,18 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
-    <link rel="stylesheet" href="./estilos/style1.css">
+    <link rel="stylesheet" href="../estilos/style1.css">
 </head>
 
 <body>
     <?php include '../plantillas/header.php'; ?>
     <div class="container-fluid mt-4">
         <div class="row">
-            <!-- Columna del menú -->
+            
             <div class="col-md-2">
                 <?php include '../plantillas/menu.php'; ?>
             </div>
 
-            <!-- Columna de productos -->
             <div class="col-md-10">
                 <div class="row g-4">
                     <h3>
@@ -75,12 +64,13 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
                          ?>
                     </h3>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <a href="?orden=ASC&catProds=<?= $catProds ?>">Más baratos</a>
+                
+                <div class="row justify-content-end mb-5">
+                    <div class="col-md-3">
+                        <a href="?orden=ASC&catProds=<?= $catProds ?>" class="btn btn-outline-warning text-dark" >Filtrar por precio menor</a>
                     </div>
-                    <div class="col">
-                        <a href="?orden=DESC&catProds=<?= $catProds ?>">Más caros</a>
+                    <div class="col-md-3">
+                        <a href="?orden=DESC&catProds=<?= $catProds ?>" class="btn btn-outline-warning text-dark" >Filtrar por precio mayor</a>
 
                     </div>
                 </div>

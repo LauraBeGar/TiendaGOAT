@@ -1,4 +1,9 @@
+<?php 
 
+if ($_SESSION['rol'] === 2){
+
+
+?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
         <div class="container-fluid">
             <a class="navbar-brand" href="/paginas/panel_editor.php">Panel de Editor</a>
@@ -29,3 +34,4 @@
             </div>
         </div>
     </nav>
+    <?php } ?>

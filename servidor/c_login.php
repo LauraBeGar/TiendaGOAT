@@ -35,4 +35,5 @@ if ($usuario) {
     header('Location: ../paginas/login.php?error=Email o clave incorrectos');
     exit();
 }
+
 ?>

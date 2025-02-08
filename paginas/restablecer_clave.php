@@ -5,12 +5,13 @@ include "../servidor/config.php";
 include "../gestores/GestorUsuarios.php";
 
 if (isset($_SESSION["usuario"])) {
-    header("Location: ../index.php");
+    header("Location: /");
     exit;
 }
 
 // Variable para manejar el estado del formulario
 $encontrado = false;
+$error = $_GET['error'];
 
 // Verificación de datos si el formulario fue enviado
 if (isset($_POST["email"]) || isset($_POST["dni"])) {
@@ -41,19 +42,24 @@ if (isset($_POST["email"]) || isset($_POST["dni"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Olvidé mi contraseña</title>
-    <!-- Incluir Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./estilos/style1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="../estilos/style1.css">
 </head>
-<?php include '../plantillas/header.php' ?>
+
 
 <body class="bg-light">
+<?php include '../plantillas/header.php' ?>
     <?php if (!$encontrado) { ?>
 
-        <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="container-fluid d-flex justify-content-center align-items-center text-center mt-5 mb-5">
             <div class="row w-100">
                 <div class="col-md-6 col-lg-4 mx-auto bg-white p-4 rounded shadow-sm">
                     <h3 class="text-center mb-4">Restablecer Contraseña</h3>
+                    <?php if ($error): ?>
+                        <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+                    <?php endif; ?>
                     <form action="" method="post">
                         <div class="mb-3">
                             <label for="dni" class="form-label">DNI</label>
@@ -63,15 +69,15 @@ if (isset($_POST["email"]) || isset($_POST["dni"])) {
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="email" name="email" maxlength="30" required>
                         </div>
-                        <button type="submit" class="btn btn-warning w-100">Verificar</button>
+                        <button type="submit" class="btn btn-warning w-25">Verificar</button>
                     </form>
                     <br><br>
-                    <a href="../index.php">Volver</a>
+                    <a href="../index.php" class="btn btn-outline-warning text-dark">Volver</a>
                 </div>
             </div>
         </div>
     <?php } else { ?>
-        <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="container d-flex justify-content-center align-items-center text-center mt-5 mb-5 ">
             <div class="row w-100">
                 <div class="col-md-6 col-lg-4 mx-auto bg-white p-4 rounded shadow-sm">
                     <h3 class="text-center mb-4">Cambiar Contraseña</h3>
@@ -80,7 +86,7 @@ if (isset($_POST["email"]) || isset($_POST["dni"])) {
                             <label for="clave" class="form-label">Nueva Contraseña</label>
                             <input type="password" class="form-control" name="clave" id="clave" required>
                         </div>
-                        <button type="submit" class="btn btn-warning w-100">Cambiar Contraseña</button>
+                        <button type="submit" class="btn btn-warning w-50">Cambiar Contraseña</button>
                     </form>
                 </div>
             </div>
