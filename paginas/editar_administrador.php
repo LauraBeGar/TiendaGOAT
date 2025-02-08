@@ -4,6 +4,7 @@ session_start();
 require_once '../servidor/config.php';
 include_once '../gestores/GestorUsuarios.php';
 include_once '../gestores/Usuario.php'; 
+include_once '../servidor/mensajes.php';
 require_once '../servidor/seguridadAdmin.php';
 
 $db = conectar();
@@ -61,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ?>
     <div class="container-fluid mt-4 flex-grow-1">
         <h1 class="text-center mb-4">Gestión de Usuarios</h1>
+        <?php mostrarMensaje() ?>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="content p-3">

@@ -5,6 +5,7 @@ session_start();
 require_once '../servidor/config.php';
 include_once '../gestores/GestorUsuarios.php';
 include_once '../gestores/Usuario.php';  
+include_once '../servidor/mensajes.php';
 require_once '../servidor/seguridadUsuario.php';
 
 $db = conectar();
@@ -83,9 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-md-8">
                 <div class="content text-center p-3">
                     <h2>Editar Información</h2>
-                    <?php if (isset($mensaje)): ?>
-                    <div class="alert alert-info"><?php echo $mensaje; ?></div>
-                <?php endif; ?>
+                    <?php mostrarMensaje() ?>
                     <form action="" method="post">
                     
                     <div class="form-group d-flex justify-content-center mt-5">

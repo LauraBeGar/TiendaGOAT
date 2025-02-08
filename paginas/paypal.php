@@ -3,6 +3,7 @@ session_start();
 
 require_once '../servidor/config.php';
 include_once '../gestores/GestorUsuarios.php';
+include_once '../servidor/mensajes.php';
 require_once '../servidor/seguridadUsuario.php';
 
 // Verifica si el carrito está vacío, redirige si es necesario
@@ -41,8 +42,7 @@ $total = 0;
             </div>
             <div class="col-md-8">
                 <h2 class="mb-4">Resumen de Pedido</h2>
-
-              
+                <?php mostrarMensaje() ?>              
                 <div class="mb-4">
                     <h5>Productos en el pedido</h5>
                     <table class="table">
@@ -77,7 +77,8 @@ $total = 0;
 
              
  <!-- Botón PayPal con SDK -->
- <div class="align-items-center w-25">
+  <div class="row">
+ <div class="col-md-3 align-items-center w-25">
                     <div id="paypal-button-container"></div>
                 </div>
 
@@ -108,6 +109,10 @@ $total = 0;
                         }
                     }).render('#paypal-button-container');
                 </script>
+                <div class="col-md-3 ms-5">
+                <a href="cancelado.php" class="btn bg-danger text-light" >Cancelar pago</a>
+                </div>
+            </div>
             </div>
             <?php include '../plantillas/menuUsuario.php' ?>
         </div>

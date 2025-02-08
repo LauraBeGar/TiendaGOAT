@@ -3,6 +3,7 @@ session_start();
 
 require_once '../servidor/config.php';
 include_once '../gestores/GestorUsuarios.php';
+include_once '../servidor/mensajes.php';
 require_once '../servidor/seguridadAdmin.php';
 
 $db = conectar();
@@ -37,6 +38,7 @@ if (isset($_GET['ordenar']) && $_GET['ordenar'] == 'nombre') {
     <?php include '../plantillas/menuAdmin.php' ?>
     <div class="container my-5">
         <h1 class="text-center mb-4">Gestión de Usuarios</h1>
+        <?php mostrarMensaje() ?>
         <div class="d-flex ms-auto justify-content-center p-3">
             <form action="gestion_usuarios.php" method="GET" class="d-flex">
                 <input type="text" name="buscar" class="form-control me-2" placeholder="Buscar por nombre o DNI">

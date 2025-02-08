@@ -1,4 +1,5 @@
 <?php
+include_once 'Pedido.php';
 class GestorPedidos
 {
     private $db;

@@ -4,6 +4,7 @@ session_start();
 require_once '../servidor/config.php';
 include_once '../gestores/GestorCategoria.php';
 include_once '../gestores/Categoria.php';
+include_once '../servidor/mensajes.php';
 require_once '../servidor/seguridad.php';
 
 $db = conectar();
@@ -60,7 +61,7 @@ if(isset($_GET['buscar'])) {
 
     <div class="container my-5">
         <h1 class="text-center mt-3 mb-4">Gestión de Categorias</h1>
-
+        <?php mostrarMensaje() ?>
         <!-- Barra de opciones -->
         <div class="d-flex ms-auto justify-content-center p-3">
             <form action="" method="GET" class="d-flex">

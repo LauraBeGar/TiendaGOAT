@@ -5,6 +5,7 @@ require_once '../servidor/config.php';
 include_once '../gestores/GestorProductos.php';
 include_once '../gestores/Producto.php';
 include_once '../gestores/GestorCategoria.php';
+include_once '../servidor/mensajes.php';
 require_once '../servidor/seguridad.php';
 
 $db = conectar();
@@ -50,6 +51,7 @@ if (isset($_GET['codigo'])) {
     ?>
     <div class="container-fluid mt-4 flex-grow-1">
         <h1 class="text-center mb-4">Gestión de Productos</h1>
+        <?php mostrarMensaje() ?>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="content p-3">

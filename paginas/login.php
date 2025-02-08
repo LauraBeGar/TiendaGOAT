@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+include_once '../servidor/mensajes.php';
 // Redirigir al panel según el rol del usuario si está logueado
 if (isset($_SESSION["email"])) {
     if ($_SESSION['rol'] == 0) {
@@ -12,8 +12,7 @@ if (isset($_SESSION["email"])) {
     }
     exit();
 }
-$error = $_GET['error'] ?? null;
-$mensaje = $_GET['mensaje'] ?? null;
+
 
 
 
@@ -38,12 +37,7 @@ $mensaje = $_GET['mensaje'] ?? null;
         <div class="row w-100 justify-content-center">
             <div class="col-md-6 col-lg-4 login-card text-center bg-white p-5 shadow rounded">
                 <h2 class="row mb-4 justify-content-center">Iniciar Sesión</h2>
-                <?php if ($error): ?>
-                    <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
-                <?php endif; ?>
-                <?php if ($mensaje): ?>
-                    <div class="alert alert-success"><?= htmlspecialchars($mensaje) ?></div>
-                <?php endif; ?>
+                <?php mostrarMensaje() ?>
                 <form name="login" action="/servidor/c_login.php" method="post">
                     <div class="row mb-3">
                         <label for="usuario" class="form-label visually-hidden">Usuario</label>

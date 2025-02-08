@@ -1,4 +1,6 @@
 <?php
+include_once '../servidor/mensajes.php';
+
 session_start();
 $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : [];
 $total = 0;
@@ -33,7 +35,7 @@ $total = 0;
 
             <div class="col-md-8 text-center">
                 <h1 class="mb-4">Carrito de Compras</h1>
-
+                <?php mostrarMensaje() ?>
                 <?php if (empty($carrito)): ?>
                     <p>No tienes productos en tu carrito.</p>
                 <?php else: ?>

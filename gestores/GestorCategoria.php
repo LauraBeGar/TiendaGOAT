@@ -8,8 +8,8 @@ class GestorCategorias{
     }
 
     public function crearCategoria ($codigo, $nombreCategoria, $activo, $codCategoriaPadre){
-
-        $sql = "insert into categorias (codigo, nombre, activo, codCategoriaPadre) values (:codigo, :nombre, :activo, :codCategoriaPadre)";
+        
+        $sql = "INSERT into categorias (codigo, nombre, activo, codCategoriaPadre) values (:codigo, :nombre, :activo, :codCategoriaPadre)";
 
         try{
             $stmt=$this->db->prepare($sql);

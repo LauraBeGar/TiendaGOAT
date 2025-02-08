@@ -6,6 +6,7 @@ include_once '../gestores/Usuario.php';
 include_once '../gestores/GestorUsuarios.php';
 include_once '../gestores/Producto.php';
 include_once '../gestores/GestorProductos.php';
+include_once '../servidor/mensajes.php';
 require_once '../servidor/seguridadUsuario.php';
 
 $db = conectar();
@@ -57,7 +58,7 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
 
             <div class="col-md-8">
                 <div class="row g-4">
-
+                <?php mostrarMensaje() ?>
                     <?php foreach ($productos as $producto): ?>
                         <div class="col-md-4 d-flex justify-content-center">
                             <div class="card" style="width: 17rem;">

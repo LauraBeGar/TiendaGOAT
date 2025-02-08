@@ -3,6 +3,7 @@ session_start();
 
 include "../servidor/config.php";
 include "../gestores/GestorUsuarios.php";
+include_once '../servidor/mensajes.php';
 
 if (isset($_SESSION["usuario"])) {
     header("Location: /");
@@ -57,9 +58,7 @@ if (isset($_POST["email"]) || isset($_POST["dni"])) {
             <div class="row w-100">
                 <div class="col-md-6 col-lg-4 mx-auto bg-white p-4 rounded shadow-sm">
                     <h3 class="text-center mb-4">Restablecer Contraseña</h3>
-                    <?php if ($error): ?>
-                        <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
-                    <?php endif; ?>
+                    <?php mostrarMensaje() ?>
                     <form action="" method="post">
                         <div class="mb-3">
                             <label for="dni" class="form-label">DNI</label>

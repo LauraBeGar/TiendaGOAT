@@ -3,6 +3,7 @@ session_start();
 require_once '../servidor/config.php';
 include '../gestores/GestorCategoria.php';
 include_once '../gestores/Categoria.php';
+include_once '../servidor/mensajes.php';
 require_once '../servidor/seguridad.php';
 
 $db = conectar();
@@ -71,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ?>
     <div class="container-fluid mt-4 flex-grow-1">
         <h1 class="text-center mt-3 mb-4">Editar Categoría</h1>
-
+        <?php mostrarMensaje() ?>
         <!-- Formulario para editar una categoría -->
         <div class="row">
             <form action="" method="post" class="col-12 col-md-6 mx-auto p-4">

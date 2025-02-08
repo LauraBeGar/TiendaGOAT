@@ -4,6 +4,7 @@ session_start();
 require_once '../servidor/config.php';
 include_once '../gestores/GestorUsuarios.php';
 include_once '../gestores/Usuario.php';
+include_once '../servidor/mensajes.php';
 require_once '../servidor/seguridadUsuario.php';
 
 
@@ -43,6 +44,7 @@ $usuario = $gestor->obtener_datos_usuario($email);
             <div class="col-md-8 justify-content-center">
                 <div class="content p-3">
                     <h2 class="text-center mb-3">Completa los datos para seguir con la compra</h2>
+                    <?php mostrarMensaje() ?>
                     <?php if ($error): ?>
                         <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
                     <?php endif; ?>
@@ -104,7 +106,7 @@ $usuario = $gestor->obtener_datos_usuario($email);
                         </div>
                 </div>
                 <div class="text-center mb-5">
-                <button type="submit" class="btn btn-secondary-custom ">Continuar</button>
+                <button type="submit" class="btn btn-secondary-custom link-hover-custom ">Continuar</button>
                 </div>
                 </form>
             </div>

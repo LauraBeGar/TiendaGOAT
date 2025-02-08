@@ -54,6 +54,9 @@ body {
 .link-hover-custom:hover{
     background-color: var(--link-hover-color);
 }
+.hover-custom:hover{
+    color: var(--link-hover-color);
+}
 
 .navbar-nav .nav-link {
     color: var(--text-color);

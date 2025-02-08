@@ -31,7 +31,7 @@ if($resultado){
 
     unset($_SESSION['carrito']);
     // ../compra.php?id='.$idPedido
-    echo json_encode("../index.php?mensaje=ok");//Respuesta
+    echo json_encode("../paginas/gracias.php?mensaje=ok");//Respuesta
 
 }
 

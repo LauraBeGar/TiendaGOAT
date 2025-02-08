@@ -4,6 +4,7 @@ session_start();
 require_once '../servidor/config.php';
 require_once '../gestores/GestorPedidos.php';
 include_once '../gestores/Pedido.php';
+include_once '../servidor/mensajes.php';
 require_once '../servidor/seguridadUsuario.php';
 
 $db = conectar();
@@ -67,6 +68,7 @@ if (isset($_GET['buscar'])) {
             <div class="col-md-8">
                 <div class="content text-center">
                     <h2>Mis Pedidos</h2>
+                    <?php mostrarMensaje() ?>
                     <div class="d-flex ms-auto justify-content-center p-3">
                         <form action="" method="GET" class="d-flex">
                             <input type="text" name="buscar" class="form-control me-2" placeholder="Buscar por código">

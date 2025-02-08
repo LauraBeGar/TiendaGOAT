@@ -1,6 +1,8 @@
 <?php 
 session_start(); 
 include '../servidor/seguridadAdmin.php';
+include_once '../servidor/mensajes.php';
+
 ?>
 
 
@@ -27,6 +29,7 @@ include '../servidor/seguridadAdmin.php';
 
     <div class="container-fluid mt-4 flex-grow-1">
         <h1 class="text-center mb-4">Gestión de Usuarios</h1>
+        <?php mostrarMensaje() ?>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="content p-3">

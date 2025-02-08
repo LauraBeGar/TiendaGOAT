@@ -2,6 +2,7 @@
 session_start();
 require_once '../servidor/config.php';
 include_once '../gestores/GestorUsuarios.php';
+include_once '../servidor/mensajes.php';
 require_once '../servidor/seguridadUsuario.php';
 
 $db = conectar();
@@ -45,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-md-7">
                 <div class="content text-center p-3">
                     <h2>Eliminar Cuenta</h2>
+                    <?php mostrarMensaje() ?>
                     <?php if (isset($mensaje)): ?>
                         <div class="alert alert-info"><?php echo $mensaje; ?></div>
                     <?php endif; ?>

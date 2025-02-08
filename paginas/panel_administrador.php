@@ -3,6 +3,7 @@
 session_start();
 
 require '../servidor/seguridadAdmin.php';
+include_once '../servidor/mensajes.php';
 
 ?>
 
@@ -23,6 +24,7 @@ require '../servidor/seguridadAdmin.php';
     <?php include '../plantillas/header.php' ?>
     <?php include '../plantillas/menuAdmin.php' ?>
     <div class="container-fluid mt-4 text-center" style="height:300px">
+    <?php mostrarMensaje() ?>
     <h2>¡Hola, <?php echo isset($_SESSION['nombre']) ? htmlspecialchars($_SESSION['nombre']) : 'Usuario'; ?>!</h2>
         <p class="text-center">Selecciona una de las opciones en el menú para comenzar.</p>
     </div>

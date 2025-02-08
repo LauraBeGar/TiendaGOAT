@@ -2,6 +2,7 @@
 session_start();
 include_once '../gestores/GestorProductos.php';
 require_once '../servidor/config.php';
+include_once '../servidor/mensajes.php';
 require_once '../servidor/seguridad.php';
 
 $db = conectar();
@@ -57,7 +58,7 @@ if (isset($_GET['ordenar']) && $_GET['ordenar'] == 'nombre') {
     ?>
     <div class="container my-5">
         <h1 class="text-center mb-4">Gestión de Productos</h1>
-
+        <?php mostrarMensaje() ?>
         <!-- Barra de opciones -->
         <div class="d-flex ms-auto justify-content-center p-3">
             <form action="" method="GET" class="d-flex">

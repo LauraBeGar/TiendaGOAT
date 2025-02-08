@@ -8,7 +8,7 @@ if (!isset($_SESSION['email']) || ($_SESSION['rol'] !== 1 && $_SESSION['rol'] !=
 
 include_once '../gestores/Producto.php';
 include_once '../gestores/GestorProductos.php';
-include_once 'config.php';
+require_once '../servidor/config.php';
 
 $db = conectar();
 

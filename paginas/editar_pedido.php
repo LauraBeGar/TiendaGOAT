@@ -4,6 +4,7 @@ session_start();
 require_once '../servidor/config.php';
 include_once '../gestores/GestorPedidos.php';
 include_once '../gestores/Pedido.php';
+include_once '../servidor/mensajes.php';
 require_once '../servidor/seguridad.php';
 
 $db = conectar();
@@ -41,6 +42,7 @@ $resultado = $gestor->obtenerPedido($idPedido);
 
     <div class="text-center mb-4">
         <h3 class="fs-5">Cambiar estado</h3>
+        <?php mostrarMensaje() ?>
     </div>
 
     <?php if ($resultado["estado"] == "Entregado" || $resultado["estado"] == "Cancelado") { ?>

@@ -3,6 +3,7 @@ session_start();
 
 require_once '../servidor/config.php';
 include_once '../gestores/GestorUsuarios.php';
+include_once '../servidor/mensajes.php';
 require_once '../servidor/seguridadUsuario.php';
 
 $db = conectar();
@@ -37,6 +38,7 @@ $usuario = $gestor->obtener_datos_usuario($email);
             <div class="col-md-8">
                 <div class="content">
                     <h2>Mi Cuenta</h2>
+                    <?php mostrarMensaje() ?>
                     <table class="table table-striped table-hover mt-3">
                         <thead class="table-dark">
                             <tr>

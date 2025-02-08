@@ -3,7 +3,8 @@ session_start();
 
 require_once '../servidor/config.php';
 include_once '../gestores/GestorCategoria.php';
-require_once '..servidor/seguridad.php';
+include_once '../servidor/mensajes.php';
+require_once '../servidor/seguridad.php';
 
 $db = conectar();
 
@@ -18,13 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $activo = htmlspecialchars(trim($_POST['activo']));
         $codCategoriaPadre = htmlspecialchars(trim($_POST['codCategoriaPadre']));
 
-
-
         if ($gestor->crearCategoria($codigo, $nombreCategoria, $activo, $codCategoriaPadre)) {
             header("Location: gestion_categorias.php?mensaje=la categoria se ha creado con éxito");
             exit();
         } else {
-            header("Location: crear_categoria.php?mensaje=error al crear la categoria");
+            header("Location: alta_categoria.php?mensaje=error al crear la categoria");
             exit();
         }
 
@@ -54,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ?>
     <div class="container-fluid">
         <h1 class="text-center mt-3 mb-4">Gestión de Categorias</h1>
-
+        <?php mostrarMensaje() ?>
         <!-- buscar -->
         <div class="d-flex ms-auto justify-content-center p-3">
             <form action="" method="post" class="d-flex">

@@ -3,6 +3,7 @@ session_start();
 
 require_once '../servidor/config.php';
 require_once('../gestores/Producto.php');
+include_once '../servidor/mensajes.php';
 require_once('../gestores/GestorProductos.php');
 require_once('../gestores/GestorCategoria.php');
 
@@ -55,7 +56,7 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
             <div class="col-md-2">
                 <?php include '../plantillas/menu.php'; ?>
             </div>
-
+            <?php mostrarMensaje() ?>
             <div class="col-md-10">
                 <div class="row g-4">
                     <h3>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once '../servidor/mensajes.php';
 
 // Redirigir al panel según el rol del usuario si está logueado
 if (isset($_SESSION["email"])) {
@@ -31,6 +32,7 @@ if (isset($_SESSION["email"])) {
     <div class="row w-100 justify-content-center">
         <div class="col-md-6 col-lg-4 register-card text-center bg-white p-5 shadow rounded">
             <h2 class="row mb-4 justify-content-center">Registro</h2>
+            <?php mostrarMensaje() ?>
             <form name="registro" action="/servidor/c_registro.php" method="post">
                 <div class="row mb-3">
                     <label for="dni" class="form-label visually-hidden">DNI</label>

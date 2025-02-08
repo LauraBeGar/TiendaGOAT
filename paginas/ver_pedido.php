@@ -4,6 +4,7 @@ session_start();
 require_once '../servidor/config.php';
 require_once '../gestores/GestorPedidos.php';
 include_once '../gestores/Pedido.php';
+include_once '../servidor/mensajes.php';
 require_once '../servidor/seguridadUsuario.php';
 
 $db = conectar();
@@ -42,9 +43,7 @@ $productosPedido = $gestor->obtenerLineasPedidos($idPedido);
 
             <div class="col-md-8 text-center">
                 <h1 class="mb-4">Pedido <?= $idPedido ?></h1>
-
-
-
+                <?php mostrarMensaje() ?>
                 <table class="table table-striped">
                     <thead>
                         <tr>
