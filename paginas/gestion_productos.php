@@ -13,6 +13,10 @@ $productos = $gestor->obtenerProductos();
 
 // paginacion
 $productosPorPagina = 5;
+$url = '';
+if(isset($_GET['ordenar'])&& isset($_GET['orden'])){
+    $url =  "&ordenar=".$_GET["ordenar"]."&orden=".$_GET["orden"];
+}
 
 // Obtener número de página actual 
 $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
@@ -29,9 +33,9 @@ $productos = $gestor->getProductosPag($inicio, $productosPorPagina, "");
 $totalProductos = count($gestor->obtenerProductos());
 $totalPaginas = ceil($totalProductos / $productosPorPagina);
 
-if (isset($_GET['ordenar']) && $_GET['ordenar'] == 'nombre') {
+if (isset($_GET['ordenar'])) {
     $orden = isset($_GET['orden']) && strtolower($_GET['orden']) == 'desc' ? 'DESC' : 'ASC';
-    $productos = $gestor->ordenarProductoPorNombre($orden);
+    $productos = $gestor->ordenarProductoPorNombre($inicio, $productosPorPagina, $orden);
 } elseif (isset($_GET['buscar'])) {
     $productos = $gestor->buscarProducto($_GET['buscar']);
 }
@@ -71,12 +75,14 @@ if (isset($_GET['ordenar']) && $_GET['ordenar'] == 'nombre') {
             <form action="gestion_productos.php" method="GET" class="ms-2">
                 <input type="hidden" name="ordenar" value="nombre">
                 <input type="hidden" name="orden" value="asc">
+                <input type="hidden" name="pagina" value="<?php $_GET["pagina"] ?? 1?>">
                 <button type="submit" class="btn btn-warning btn-custom">Ordenar A-Z</button>
             </form>
 
             <form action="gestion_productos.php" method="GET" class="ms-2">
                 <input type="hidden" name="ordenar" value="nombre">
                 <input type="hidden" name="orden" value="desc">
+                <input type="hidden" name="pagina" value="<?php $_GET["pagina"] ?? 1?>">
                 <button type="submit" class="btn btn-warning btn-custom">Ordenar Z-A</button>
             </form>
         </div>
@@ -130,19 +136,19 @@ if (isset($_GET['ordenar']) && $_GET['ordenar'] == 'nombre') {
                         <?php if ($pagina > 1): ?>
                             <li class="page-item">
                                 <a class="page-link border border-warning text-dark"
-                                    href="?pagina=<?= $pagina - 1 ?>">Anterior</a>
+                                    href="?pagina=<?= ($pagina - 1) . $url?>">Anterior</a>
                             </li>
                         <?php endif; ?>
                         <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
                             <li class="page-item">
                                 <a class="page-link border border-warning text-dark <?= $pagina == $i ? 'active bg-warning text-dark' : '' ?>"
-                                    href="?pagina=<?= $i ?>"><?= $i ?></a>
+                                    href="?pagina=<?= $i . $url?>"><?= $i ?></a>
                             </li>
                         <?php endfor; ?>
                         <?php if ($pagina < $totalPaginas): ?>
                             <li class="page-item">
                                 <a class="page-link border border-warning text-dark"
-                                    href="?pagina=<?= $pagina + 1 ?>">Siguiente</a>
+                                    href="?pagina=<?= ($pagina + 1) . $url ?>">Siguiente</a>
                             </li>
                         <?php endif; ?>
                     </ul>

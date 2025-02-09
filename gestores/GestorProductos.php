@@ -214,13 +214,15 @@ class GestorProductos
         }
     }
 
-    public function ordenarProductoPorNombre($orden)
+    public function ordenarProductoPorNombre($inicio, $cantidad, $orden)
     {
         $orden = strtoupper($orden) === 'DESC' ? 'DESC' : 'ASC';
-        $sql = "SELECT codigo, nombre, descripcion, imagen, categoria, precio, activo FROM productos ORDER BY nombre $orden";
+        $sql = "SELECT codigo, nombre, descripcion, imagen, categoria, precio, activo FROM productos ORDER BY nombre $orden LIMIT :inicio, :cantidad";
 
         try {
             $stmt = $this->db->prepare($sql);
+            $stmt->bindValue(':inicio', (int) $inicio, PDO::PARAM_INT);
+            $stmt->bindValue(':cantidad', (int) $cantidad, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

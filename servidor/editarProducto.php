@@ -55,7 +55,7 @@ if (
     // Manejo de la imagen
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
         $nombreImagen = basename($_FILES["imagen"]["name"]);
-        $rutaImagen = "img/" . $nombreImagen;
+        $rutaImagen = "../img/" . $nombreImagen;
         $tipoArchivo = strtolower(pathinfo($rutaImagen, PATHINFO_EXTENSION));
 
         // Verifico si el archivo es una imagen:
