@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-md-2">
                 <?php include '../plantillas/menu.php' ?>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-8">
                 <div class="content text-center p-3">
                     <h2>Eliminar Cuenta</h2>
                     <?php mostrarMensaje() ?>

@@ -106,23 +106,23 @@ class GestorUsuarios
         $clave = password_hash($usuario->getClave(), PASSWORD_DEFAULT);
 
         if (!$this->validarDni($dni)) {
-            header("Location: registro.php?error=El DNI no es válido");
+            header("Location: ../paginas/registro.php?error=El DNI no es válido");
             exit();
         }
 
         if (!$this->validarEmail($email)) {
-            header("Location: registro.php?error=El email no es válido");
+            header("Location: ../paginas/registro.php?error=El email no es válido");
             exit();
         }
 
         //comprobar si el dni ya existe
         if ($this->comprobarDni($dni)) {
-            header("Location: registro.php?error=El DNI ya está registrado");
+            header("Location: ../paginas/registro.php?error=El DNI ya está registrado");
             exit();
         }
 
         if ($this->email_existe($email)) {
-            header("Location: registro.php?error=El email ya está registrado");
+            header("Location: ../paginas/registro.php?error=El email ya está registrado");
             exit();
         }
 
@@ -140,7 +140,7 @@ class GestorUsuarios
             $stmt->execute();
 
             if ($stmt->rowCount() > 0) {
-                header("Location: ../paginas/login.php?alert=¡Registrado! Ya puedes iniciar sesión.");
+                header("Location: ../paginas/login.php?mensaje=¡Registrado! Ya puedes iniciar sesión.");
                 exit();
             } else {
                 return "Error al insertar los valores.";
@@ -166,12 +166,17 @@ class GestorUsuarios
         $clave = $usuario->getClave();
 
         if (!$this->validarDni($dni)) {
-            header("Location: login.php?error=El DNI no es válido");
+            header("Location: ../paginas/crear_usuario.php?error=El DNI no es válido");
+            exit();
+        }
+
+        if ($this->comprobarDni($dni)) {
+            header("Location: ../paginas/crear_usuario.php?error=El DNI ya está registrado");
             exit();
         }
 
         if ($this->email_existe($email)) {
-            header("Location: login.php?error=El email ya está registrado");
+            header("Location: ../paginas/login.php?error=El email ya está registrado");
             exit();
         }
 
@@ -212,7 +217,7 @@ class GestorUsuarios
                 $clave_hash = $usuario['clave'];
 
                 if ($usuario['activo'] == 0) {
-                    header('Location: login.php?error=usuario inactivo');
+                    header('Location: ../paginas/login.php?error=usuario inactivo');
                     exit();
                 }
 

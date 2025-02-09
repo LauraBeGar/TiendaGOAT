@@ -72,7 +72,7 @@ if (
         }
 
         // Verifico la dimensión del archivo:
-        if ($comprobacion[0] > 200 || $comprobacion[1] > 200) {
+        if ($comprobacion[0] > 500 || $comprobacion[1] > 500) {
             header("Location: ../paginas/editar_producto.php?codigo=" . $codigo . "&error=La imagen es demasiado grande");
             exit();
         }

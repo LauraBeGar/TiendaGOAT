@@ -1,10 +1,6 @@
-<?php
-session_start();
-
-require '../servidor/seguridad.php';
-include_once '../servidor/mensajes.php';
-
-?>
+<?php session_start(); 
+require '../servidor/seguridad.php' ; 
+include_once '../servidor/mensajes.php' ; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,19 +15,29 @@ include_once '../servidor/mensajes.php';
     <link rel="stylesheet" href="../estilos/style1.css">
 </head>
 
-<body class="d-flex flex-column min-vh-100">
+<body>
     <?php include '../plantillas/header.php' ?>
     <?php
-    include '../plantillas/menuAdmin.php';
-    include '../plantillas/menuEditor.php';
-    ?>
+        include '../plantillas/menuAdmin.php';
+        include '../plantillas/menuEditor.php';
+        ?>
     <div class="container-fluid mt-4 text-center" style="height:300px">
-    <?php mostrarMensaje() ?>
-    <h2>¡Hola, <?php echo isset($_SESSION['nombre']) ? htmlspecialchars($_SESSION['nombre']) : 'Usuario'; ?>!</h2>
-        <p class="text-center">Selecciona una de las opciones en el menú para comenzar.</p>
-    </div>
-    <?php include '../plantillas/footer.php' ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+        <div class="row ">
+            <div class="col-md-2">
+                <?php include '../plantillas/menu.php'; ?>
+            </div>
+            <div class="col-md-10">
+            <?php mostrarMensaje() ?>
+            <h2>¡Hola, <?php echo isset($_SESSION['nombre']) ? htmlspecialchars($_SESSION['nombre']) : 'Usuario'; ?>!
+            </h2>
+            <p class="text-center">Selecciona una de las opciones en el menú para comenzar.</p>
+            </div>
+            <?php include '../plantillas/footer.php' ?>
+        </div>
+        </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+    </body>
 
 </html>

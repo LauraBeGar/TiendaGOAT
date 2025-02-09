@@ -19,7 +19,7 @@ $categoriasPorPagina = 5;
 // Obtener número de página actual 
 $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
 if ($pagina < 1)
-    $pagina = 1; 
+    $pagina = 1;
 
 //indice de inicio, primer articulo que se mostrara en la pagina 
 $inicio = ($pagina - 1) * $categoriasPorPagina;
@@ -32,9 +32,10 @@ $totalCategorias = count($gestor->obtenerCategorias());
 $totalPaginas = ceil($totalCategorias / $categoriasPorPagina);
 
 
-if(isset($_GET['buscar'])) {
+if (isset($_GET['buscar'])) {
     $categorias = $gestor->buscarCategoria($_GET['buscar']);
-    };
+}
+;
 
 
 ?>
@@ -51,6 +52,7 @@ if(isset($_GET['buscar'])) {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
     <link rel="stylesheet" href="../estilos/style1.css">
 </head>
+
 <body class="d-flex flex-column min-vh-100">
     <?php include '../plantillas/header.php' ?>
     <?php
@@ -91,9 +93,10 @@ if(isset($_GET['buscar'])) {
                             <td><?php echo htmlspecialchars($categoria->getNombre()); ?></td>
                             <td><?php echo htmlspecialchars($categoria->getActivo() == 1 ? 'Activo' : 'Inactivo'); ?></td>
                             <td><?php echo htmlspecialchars($categoria->getcodCategoriaPadre()); ?></td>
-                            
+
                             <td class="text-center">
-                                <a href="editar_categoria.php?codigo=<?php echo htmlspecialchars($categoria->getCodigo()); ?>">
+                                <a
+                                    href="editar_categoria.php?codigo=<?php echo htmlspecialchars($categoria->getCodigo()); ?>">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
@@ -107,27 +110,31 @@ if(isset($_GET['buscar'])) {
                     <?php } ?>
                 </tbody>
             </table>
-            <nav>
-        <ul class="pagination justify-content-center">
-            <?php if ($pagina > 1): ?>
-                <li class="page-item">
-                    <a class="page-link border border-warning text-dark" href="?pagina=<?= $pagina - 1 ?>">Anterior</a>
-                </li>
-            <?php endif; ?>
-            <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-                <li class="page-item">
-                    <a class="page-link border border-warning text-dark <?= $pagina == $i ? 'active bg-warning text-dark' : '' ?>"
-                        href="?pagina=<?= $i ?>"><?= $i ?></a>
-                </li>
-            <?php endfor; ?>
-            <?php if ($pagina < $totalPaginas): ?>
-                <li class="page-item">
-                    <a class="page-link border border-warning text-dark" href="?pagina=<?= $pagina + 1 ?>">Siguiente</a>
-                </li>
-            <?php endif; ?>
-        </ul>
-    </nav>
-            </div>
+            <?php if (!isset($_GET['buscar'])) { ?>
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        <?php if ($pagina > 1): ?>
+                            <li class="page-item">
+                                <a class="page-link border border-warning text-dark"
+                                    href="?pagina=<?= $pagina - 1 ?>">Anterior</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+                            <li class="page-item">
+                                <a class="page-link border border-warning text-dark <?= $pagina == $i ? 'active bg-warning text-dark' : '' ?>"
+                                    href="?pagina=<?= $i ?>"><?= $i ?></a>
+                            </li>
+                        <?php endfor; ?>
+                        <?php if ($pagina < $totalPaginas): ?>
+                            <li class="page-item">
+                                <a class="page-link border border-warning text-dark"
+                                    href="?pagina=<?= $pagina + 1 ?>">Siguiente</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </nav>
+            <?php } ?>
+        </div>
     </div>
 
 

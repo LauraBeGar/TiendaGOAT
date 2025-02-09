@@ -11,7 +11,7 @@ require_once '../servidor/seguridadUsuario.php';
 
 $db = conectar();
 $gestor = new GestorProductos($db);
-$productos = $gestor->obtenerProductos();
+$productos = $gestor->obtenerProductosActivos();
 
 // Número de artículos por página
 $productosPorPagina = 3;
@@ -26,7 +26,7 @@ $inicio = ($pagina - 1) * $productosPorPagina;
 
 $orden = $_GET["orden"] ?? "";
 // Obtener artículos paginados
-$productos = $gestor->getProductosPag($inicio, $productosPorPagina, $orden);
+$productos = $gestor->getProductosPagActivos($inicio, $productosPorPagina, $orden);
 
 // Obtener total de artículos
 $totalProductos = count($gestor->obtenerProductos());
@@ -65,7 +65,7 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
                                 <?php if (!empty($producto->getImagen())): ?>
                                     <img src="/img/<?= htmlspecialchars($producto->getImagen()) ?>" class="card-img-top"
                                         alt="<?= htmlspecialchars($producto->getNombre()) ?>"
-                                        style="width: 100%; height: 250px; object-fit: cover;">
+                                        style="width: 50%; height: 150px; object-fit: cover; display: block; margin: auto;">
                                 <?php else: ?>
                                     <div class="p-3 text-center">No hay imagen disponible</div>
                                 <?php endif; ?>
@@ -73,6 +73,7 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
                                     <h5 class="card-title"><?= htmlspecialchars($producto->getNombre()) ?></h5>
                                     <p class="card-text"><?= htmlspecialchars($producto->getDescripcion()) ?> </p>
                                     <p class="card-text fw-bold"><?= htmlspecialchars($producto->getPrecio()) ?> €</p>
+                                    <a href="detalle_producto.php?codigo=<?= $producto->getCodigo()?>" class="btn btn-outline-warning text-dark mb-4">Ver Detalles</a>
                                     <a href="../servidor/c_carrito.php?codigo=<?= $producto->getCodigo() ?>&nombre=<?= $producto->getNombre() ?>&imagen=<?= $producto->getCodigo() ?>&precio=<?= $producto->getPrecio() ?>&categoria=<?= $producto->getCodigo() ?>"
                                         class="btn btn-outline-warning text-dark">Añadir al carrito</a>
                                 </div>

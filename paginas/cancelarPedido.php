@@ -9,9 +9,9 @@ $db = conectar();
 
 $gestor = new GestorPedidos($db);
 $idPedido = $_GET['idPedido'];
-$resultado = $gestor->obtenerPedido($idPedido)
+$resultado = $gestor->obtenerPedido($idPedido);
 
-    ?>
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -32,17 +32,20 @@ $resultado = $gestor->obtenerPedido($idPedido)
     include '../plantillas/menuAdmin.php';
     include '../plantillas/menuEditor.php';
     ?>
-    
+
     <div class="container-fluid mt-4 flex-grow-1 d-flex flex-column justify-content-center">
         <h2 class="text-center mt-3">Confirmar Cancelación</h2>
         <div class="text-center text-danger mt-5">
             <?php if ($resultado['estado'] === 'Cancelado') { ?>
                 <p>El pedido ya ha sido cancelado</p>
             <?php } else { ?>
-                <p class="text-dark">¿Estás seguro de que deseas dar de baja el pedido <strong><?= $idPedido ?></strong>?</p>
+                <p class="text-dark">¿Estás seguro de que deseas dar de baja el pedido <strong><?= $idPedido ?></strong>?
+                </p>
                 <div class="text-center">
-                    <a href="../servidor/cambiarEstado.php?pedido=<?= $idPedido ?>&estado=Cancelado" class="btn btn-danger me-4">Sí, dar de baja</a>
-                    <a href="pedido_usuario.php" class="btn btn-secondary">Cancelar</a>
+                    <a href="../servidor/cambiarEstado.php?pedido=<?= $idPedido ?>&estado=Cancelado"
+                        class="btn btn-danger me-4">Sí, dar de baja</a>
+                    <a href="<?php echo ($_SESSION['rol'] == 0) ? 'pedido_usuario.php' : 'gestion_pedidos.php'; ?>"
+                        class="btn btn-secondary">Cancelar</a>
                 </div>
             <?php } ?>
         </div>

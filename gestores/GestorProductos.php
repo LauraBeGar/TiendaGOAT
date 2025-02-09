@@ -43,7 +43,14 @@ class GestorProductos
             return false;
         }
     }
-
+    public function obtenerProductosActivos() {
+        $sql = "SELECT COUNT(*) FROM productos WHERE activo = 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchColumn(); 
+    }
+    
+    
     
 
     public function getProductoPorCodigo($codigo)
@@ -253,6 +260,24 @@ class GestorProductos
             return [];
         }
     }
+
+    public function buscarProductoEnCategoria($busqueda, $categoria)
+{
+    $sql = "SELECT codigo, nombre, descripcion, imagen, categoria, precio, activo 
+            FROM productos WHERE (nombre LIKE :busqueda OR codigo LIKE :busqueda) AND categoria = :categoria AND activo = 1";
+    
+    try {
+        $stmt = $this->db->prepare($sql);
+        $param = "%" . $busqueda . "%";
+        $stmt->bindParam(':busqueda', $param);
+        $stmt->bindParam(':categoria', $categoria);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error al buscar el producto: " . $e->getMessage();
+        return [];
+    }
+}
 
     public function getProductosPorCategoria($codCategoria, $orden)
     {

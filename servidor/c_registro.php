@@ -29,7 +29,7 @@ $gestor = new GestorUsuarios($db);
 $resultado = $gestor->registrar_usuario($usuario);
 
 if ($resultado === true) {
-    header('Location:../paginas/login.php?success=Registro exitoso');
+    header('Location:../paginas/login.php?mensaje=Registro exitoso');
     exit();
 } else {
     header('Location:../paginas/registro.php?error=Error al registrar el usuario');

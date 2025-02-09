@@ -48,20 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <?php include '../plantillas/header.php' ?>
     <?php
-        include '../plantillas/menuAdmin.php';
-        include '../plantillas/menuEditor.php';
+    include '../plantillas/menuAdmin.php';
+    include '../plantillas/menuEditor.php';
     ?>
     <div class="container-fluid">
         <h1 class="text-center mt-3 mb-4">Gestión de Categorias</h1>
         <?php mostrarMensaje() ?>
-        <!-- buscar -->
-        <div class="d-flex ms-auto justify-content-center p-3">
-            <form action="" method="post" class="d-flex">
-                <input type="text" name="buscar" class="form-control me-2" placeholder="Buscar por nombre o ID">
-                <button type="submit" class="btn bg-secondary-custom link-hover-custom me-2">Buscar</button>
-            </form>
-        </div>
-
         <!-- Formulario -->
         <div class="row">
             <form action="" method="post" class="col-12 col-md-6 mx-auto p-4 ">
@@ -101,9 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <button type="submit" class="btn bg-secondary-custom me-5">Crear Categoría</button>
                     <a href="gestion_categorias.php" class="btn btn-outline-warning text-dark">Atras</a>
                 </div>
-                
-                   
-              
             </form>
         </div>
     </div>

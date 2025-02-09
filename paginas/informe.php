@@ -51,6 +51,7 @@ if ($tipo == 1 || $tipo == 2) {//Usuarios
 
     <?php include_once '../plantillas/header.php' ?>
     <?php include '../plantillas/menuAdmin.php'; ?>
+    <?php include '../plantillas/menuEditor.php'; ?>
 
 
     <div class="container-fluid mt-4 flex-grow-1">

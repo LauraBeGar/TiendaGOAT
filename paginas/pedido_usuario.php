@@ -95,7 +95,7 @@ if (isset($_GET['buscar'])) {
                                     <td><?= $item->getEstado() ?></td>
                                     <td>
                                         <a
-                                            href="ver_Pedido.php?idPedido=<?php echo htmlspecialchars($item->getidPedido()); ?>">
+                                            href="ver_pedido.php?idPedido=<?php echo htmlspecialchars($item->getidPedido()); ?>">
                                             <i class="fa fa-eye"></i>
 
 

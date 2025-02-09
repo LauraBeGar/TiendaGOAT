@@ -34,7 +34,7 @@ include_once '../servidor/mensajes.php';
             <div class="col-md-8">
                 <div class="content p-3">
                     <h2 class="text-center">Dar de alta a nuevos Usuarios</h2>
-                    <form action="c_crearUsuario.php" method="post">
+                    <form action="../servidor/c_crearUsuario.php" method="post">
                         <div class="row">
                             <!-- Primera fila con dos columnas -->
                             <div class="col-md-6 mb-3">

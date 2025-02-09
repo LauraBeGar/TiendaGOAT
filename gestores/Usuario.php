@@ -2,7 +2,6 @@
 class Usuario
 {
     private $dni;
-    private $clave;
     private $nombre;
     private $apellidos;
     private $direccion;
@@ -12,12 +11,13 @@ class Usuario
     private $email;
     private $rol;
     private $activo;
+    private $clave;
 
     // Constructor para inicializar el usuario
     public function __construct($dni, $nombre, $apellidos, $direccion, $localidad, $provincia, $telefono, $email, $rol, $activo, $clave = null)
     {
         $this->dni = $dni;
-        $this->clave = $clave;
+      
         $this->nombre = $nombre;
         $this->apellidos = $apellidos;
         $this->direccion = $direccion;
@@ -27,6 +27,7 @@ class Usuario
         $this->email = $email;
         $this->rol = $rol;
         $this->activo = $activo;
+        $this->clave = $clave;
     }
     // Getter y Setter 
 
@@ -37,11 +38,6 @@ class Usuario
     public function getDni()
     {
         return $this->dni;
-    }
-
-    public function setClave($clave)
-    {
-        $this->clave = $clave;
     }
 
     public function getNombre()
@@ -138,6 +134,10 @@ class Usuario
     public function getClave()
     {
         return $this->clave;
+    }
+    public function setClave($clave)
+    {
+        $this->clave = $clave;
     }
 }
 

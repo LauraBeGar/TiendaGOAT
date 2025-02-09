@@ -12,12 +12,12 @@ $gestor = new GestorProductos($db);
 $productos = $gestor->obtenerProductos();
 
 // paginacion
-$productosPorPagina = 3;
+$productosPorPagina = 5;
 
 // Obtener número de página actual 
 $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
 if ($pagina < 1)
-    $pagina = 1; 
+    $pagina = 1;
 
 //indice de inicio, primer articulo que se mostrara en la pagina 
 $inicio = ($pagina - 1) * $productosPorPagina;
@@ -34,7 +34,7 @@ if (isset($_GET['ordenar']) && $_GET['ordenar'] == 'nombre') {
     $productos = $gestor->ordenarProductoPorNombre($orden);
 } elseif (isset($_GET['buscar'])) {
     $productos = $gestor->buscarProducto($_GET['buscar']);
-} 
+}
 ?>
 
 <!DOCTYPE html>
@@ -69,17 +69,17 @@ if (isset($_GET['ordenar']) && $_GET['ordenar'] == 'nombre') {
                 <button type="submit" class="btn bg-secondary-custom link-hover-custom me-2">Dar de alta</button>
             </form>
             <form action="gestion_productos.php" method="GET" class="ms-2">
-            <input type="hidden" name="ordenar" value="nombre">
-            <input type="hidden" name="orden" value="asc">
-            <button type="submit" class="btn btn-warning btn-custom">Ordenar A-Z</button>
-        </form>
+                <input type="hidden" name="ordenar" value="nombre">
+                <input type="hidden" name="orden" value="asc">
+                <button type="submit" class="btn btn-warning btn-custom">Ordenar A-Z</button>
+            </form>
 
-        <form action="gestion_productos.php" method="GET" class="ms-2">
-            <input type="hidden" name="ordenar" value="nombre">
-            <input type="hidden" name="orden" value="desc">
-            <button type="submit" class="btn btn-warning btn-custom">Ordenar Z-A</button>
-        </form>
-    </div>
+            <form action="gestion_productos.php" method="GET" class="ms-2">
+                <input type="hidden" name="ordenar" value="nombre">
+                <input type="hidden" name="orden" value="desc">
+                <button type="submit" class="btn btn-warning btn-custom">Ordenar Z-A</button>
+            </form>
+        </div>
 
         <div class="table-container">
             <table class="table table-striped table-bordered">
@@ -103,19 +103,20 @@ if (isset($_GET['ordenar']) && $_GET['ordenar'] == 'nombre') {
                             <td><?php echo htmlspecialchars($producto->getNombre()); ?></td>
                             <td><?php echo htmlspecialchars($producto->getDescripcion()); ?></td>
                             <td>
-                                <img src="/img/<?php echo htmlspecialchars($producto->getImagen()); ?>" class="img-thumbnail" width="100">
+                                <img src="/img/<?php echo htmlspecialchars($producto->getImagen()); ?>"
+                                    class="img-thumbnail" width="100">
                             </td>
                             <td><?php echo htmlspecialchars($producto->getCategoria()); ?></td>
                             <td><?php echo htmlspecialchars($producto->getPrecio()); ?></td>
                             <td><?php echo htmlspecialchars($producto->getActivo() == 1 ? 'Activo' : 'Inactivo'); ?></td>
                             <td class="text-center">
-                                <a href="editar_producto.php?codigo=<?php echo htmlspecialchars($producto->getCodigo()); ?>">
+                                <a
+                                    href="editar_producto.php?codigo=<?php echo htmlspecialchars($producto->getCodigo()); ?>">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
                             <td class="text-center">
-                                <a
-                                    href="baja_producto.php?codigo=<?php echo htmlspecialchars($producto->getCodigo()); ?>">
+                                <a href="baja_producto.php?codigo=<?php echo htmlspecialchars($producto->getCodigo()); ?>">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </td>
@@ -123,26 +124,30 @@ if (isset($_GET['ordenar']) && $_GET['ordenar'] == 'nombre') {
                     <?php } ?>
                 </tbody>
             </table>
-            <nav>
-        <ul class="pagination justify-content-center">
-            <?php if ($pagina > 1): ?>
-                <li class="page-item">
-                    <a class="page-link border border-warning text-dark" href="?pagina=<?= $pagina - 1 ?>">Anterior</a>
-                </li>
-            <?php endif; ?>
-            <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-                <li class="page-item">
-                    <a class="page-link border border-warning text-dark <?= $pagina == $i ? 'active bg-warning text-dark' : '' ?>"
-                        href="?pagina=<?= $i ?>"><?= $i ?></a>
-                </li>
-            <?php endfor; ?>
-            <?php if ($pagina < $totalPaginas): ?>
-                <li class="page-item">
-                    <a class="page-link border border-warning text-dark" href="?pagina=<?= $pagina + 1 ?>">Siguiente</a>
-                </li>
-            <?php endif; ?>
-        </ul>
-    </nav>
+            <?php if (!isset($_GET['buscar'])) { ?>
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        <?php if ($pagina > 1): ?>
+                            <li class="page-item">
+                                <a class="page-link border border-warning text-dark"
+                                    href="?pagina=<?= $pagina - 1 ?>">Anterior</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+                            <li class="page-item">
+                                <a class="page-link border border-warning text-dark <?= $pagina == $i ? 'active bg-warning text-dark' : '' ?>"
+                                    href="?pagina=<?= $i ?>"><?= $i ?></a>
+                            </li>
+                        <?php endfor; ?>
+                        <?php if ($pagina < $totalPaginas): ?>
+                            <li class="page-item">
+                                <a class="page-link border border-warning text-dark"
+                                    href="?pagina=<?= $pagina + 1 ?>">Siguiente</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </nav>
+            <?php } ?>
         </div>
     </div>
     <?php include '../plantillas/footer.php' ?>

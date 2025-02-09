@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $usuario = new Usuario(
         $dni,
-        $claveHasheada, 
         $nombre,
         $apellidos,
         $direccion,
@@ -33,13 +32,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $telefono,
         $email,
         $rol,
-        $estado
+        $estado,
+        $claveHasheada, 
     );
     $db = conectar();
     $gestorUsuarios = new GestorUsuarios($db);
 
     if ($gestorUsuarios->crear_usuario($usuario)) {
-        header('Location: ../paginas/gestion_usuarios.php?success=Usuario creado correctamente');
+        header('Location: ../paginas/gestion_usuarios.php?mensaje=Usuario creado correctamente');
     } else {
         header('Location: ../paginas/crear_usuario.php?error=No se pudo crear el usuario');
     }

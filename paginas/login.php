@@ -33,11 +33,12 @@ if (isset($_SESSION["email"])) {
 
 <body>
     <?php include '../plantillas/header.php' ?>
+    <?php mostrarMensaje() ?>
     <main class="container-fluid d-flex justify-content-center align-items-center p-4 bg-light">
         <div class="row w-100 justify-content-center">
             <div class="col-md-6 col-lg-4 login-card text-center bg-white p-5 shadow rounded">
                 <h2 class="row mb-4 justify-content-center">Iniciar Sesión</h2>
-                <?php mostrarMensaje() ?>
+                
                 <form name="login" action="/servidor/c_login.php" method="post">
                     <div class="row mb-3">
                         <label for="usuario" class="form-label visually-hidden">Usuario</label>

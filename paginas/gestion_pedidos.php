@@ -104,6 +104,7 @@ if (isset($_GET['buscar'])) {
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <?php if(!isset($_GET['buscar'])){ ?>
             <nav>
                 <ul class="pagination justify-content-center">
                     <?php if ($pagina > 1): ?>
@@ -124,6 +125,7 @@ if (isset($_GET['buscar'])) {
                     <?php endif; ?>
                 </ul>
             </nav>
+            <?php  }?>
         </div>
     </div>
 

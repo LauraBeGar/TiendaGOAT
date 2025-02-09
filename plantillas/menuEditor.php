@@ -1,6 +1,6 @@
 <?php 
 
-if ($_SESSION['rol'] === 2){
+if (isset($_SESSION["rol"]) && $_SESSION['rol'] === 2){
 
 
 ?>

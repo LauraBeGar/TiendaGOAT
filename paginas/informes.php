@@ -20,16 +20,14 @@ require_once '../servidor/seguridad.php';
 
 <body class="d-flex flex-column min-vh-100">
     <?php include '../plantillas/header.php' ?>
-    <?php
-    include '../plantillas/menuAdmin.php';
-    include '../plantillas/menuEditor.php';
-    ?>
-    <div class="container-fluid mt-4 flex-grow-1">
-        <div class="row justify-content-center">
+    <?php include '../plantillas/menuAdmin.php'; ?>
+    <?php include '../plantillas/menuEditor.php'; ?>
+    <div class="container-fluid mt-4 ">
+        <div class="row justify-content-center ">
             <div class="col-md-10 text-center">
                 <h1 class="mt-5 mb-5">Informes</h1>
 
-                <div class="row">
+                <div class="row mb-5">
                     <div class="col">
                         <a href="./informe.php?informe=Usuarios activos&tipo=1"
                             class="btn btn-outline-warning text-dark"><strong>Usuarios Activos </strong></a>
@@ -39,7 +37,7 @@ require_once '../servidor/seguridad.php';
                             class="btn btn-outline-warning text-dark"><strong>Usuarios Inactivos </strong></a>
                     </div>
                     <div class="col">
-                        <a href="./informe.php?informe=Productos inactivos&tipo=3"
+                        <a href="./informe.php?informe=Productos activos&tipo=3"
                             class="btn btn-outline-warning text-dark"><strong>Productos activos </strong></a>
                     </div>
 

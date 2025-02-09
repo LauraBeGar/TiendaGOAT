@@ -1,16 +1,11 @@
 <?php
 session_start();
 
-/*if (!isset($_SESSION['email'])) {
-    header('Location: login.php');
-    exit();
-}*/
-
-
 require_once './servidor/config.php';
 require_once('./gestores/GestorUsuarios.php');
 require_once('./gestores/Producto.php');
 require_once('./gestores/GestorProductos.php');
+include_once('./servidor/mensajes.php');
 
 $db = conectar();
 $gestor = new GestorProductos($db);
@@ -59,15 +54,17 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
             <div class="col-md-2">
                 <?php include './plantillas/menu.php'; ?>
             </div>
-
+            <?php mostrarMensaje() ?>
             <!-- Columna de productos -->
             <div class="col-md-10">
                 <div class="row justify-content-end mb-5">
                     <div class="col-md-3">
-                        <a href="?pagina=<?= $pagina ?>&orden=ASC" class="btn btn-outline-warning text-dark" >Filtrar por precio menor</a>
+                        <a href="?pagina=<?= $pagina ?>&orden=ASC" class="btn btn-outline-warning text-dark">Filtrar por
+                            precio menor</a>
                     </div>
                     <div class="col-md-3">
-                        <a href="?pagina=<?= $pagina ?>&orden=DESC" class="btn btn-outline-warning text-dark" >Filtrar por precio mayor</a>
+                        <a href="?pagina=<?= $pagina ?>&orden=DESC" class="btn btn-outline-warning text-dark">Filtrar
+                            por precio mayor</a>
                     </div>
                 </div>
                 <div class="row g-4">
@@ -78,7 +75,7 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
                                 <?php if (!empty($producto->getImagen())): ?>
                                     <img src="/img/<?= htmlspecialchars($producto->getImagen()) ?>" class="card-img-top"
                                         alt="<?= htmlspecialchars($producto->getNombre()) ?>"
-                                        style="width: 100%; height: 250px; object-fit: cover;">
+                                        style="width: 50%; height: 150px; object-fit: cover; display: block; margin: auto;">
                                 <?php else: ?>
                                     <div class="p-3 text-center">No hay imagen disponible</div>
                                 <?php endif; ?>
@@ -86,6 +83,8 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
                                     <h5 class="card-title"><?= htmlspecialchars($producto->getNombre()) ?></h5>
                                     <p class="card-text"><?= htmlspecialchars($producto->getDescripcion()) ?> </p>
                                     <p class="card-text fw-bold"><?= htmlspecialchars($producto->getPrecio()) ?> €</p>
+                                    <a href="/paginas/detalle_producto.php?codigo=<?= $producto->getCodigo() ?>"
+                                        class="btn btn-outline-warning text-dark mb-4">Ver Detalles</a>
                                     <a href="/servidor/c_carrito.php?codigo=<?= $producto->getCodigo() ?>&nombre=<?= $producto->getNombre() ?>&imagen=<?= $producto->getImagen() ?>&precio=<?= $producto->getPrecio() ?>&categoria=<?= $producto->getCategoria() ?>"
                                         class="btn btn-outline-warning text-dark">Añadir al carrito</a>
                                 </div>
@@ -96,28 +95,30 @@ $totalPaginas = ceil($totalProductos / $productosPorPagina);
             </div>
         </div>
     </div>
-
-    <nav>
-    <ul class="pagination justify-content-center mt-4">
-        <?php if ($pagina > 1): ?>
-            <li class="page-item">
-                <a class="page-link border border-warning text-dark" href="?pagina=<?= $pagina - 1 ?>&orden=<?= $orden ?>">Anterior</a>
-            </li>
-        <?php endif; ?>
-        <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-            <li class="page-item">
-                <a class="page-link border border-warning text-dark <?= $pagina == $i ? 'active bg-warning text-dark' : '' ?>"
-                    href="?pagina=<?= $i ?>&orden=<?= $orden ?>"><?= $i ?></a>
-            </li>
-        <?php endfor; ?>
-        <?php if ($pagina < $totalPaginas): ?>
-            <li class="page-item">
-                <a class="page-link border border-warning text-dark" href="?pagina=<?= $pagina + 1 ?>&orden=<?= $orden ?>">Siguiente</a>
-            </li>
-        <?php endif; ?>
-    </ul>
-</nav>
-
+    <?php if (!isset($_GET['buscar'])) { ?>
+        <nav>
+            <ul class="pagination justify-content-center mt-4">
+                <?php if ($pagina > 1): ?>
+                    <li class="page-item">
+                        <a class="page-link border border-warning text-dark"
+                            href="?pagina=<?= $pagina - 1 ?>&orden=<?= $orden ?>">Anterior</a>
+                    </li>
+                <?php endif; ?>
+                <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+                    <li class="page-item">
+                        <a class="page-link border border-warning text-dark <?= $pagina == $i ? 'active bg-warning text-dark' : '' ?>"
+                            href="?pagina=<?= $i ?>&orden=<?= $orden ?>"><?= $i ?></a>
+                    </li>
+                <?php endfor; ?>
+                <?php if ($pagina < $totalPaginas): ?>
+                    <li class="page-item">
+                        <a class="page-link border border-warning text-dark"
+                            href="?pagina=<?= $pagina + 1 ?>&orden=<?= $orden ?>">Siguiente</a>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </nav>
+    <?php } ?>
     <?php include './plantillas/footer.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
